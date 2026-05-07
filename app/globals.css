@@ -796,6 +796,20 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   line-height: 1.5;
 }
+.jg-modal-error {
+  margin: 8px 0 12px;
+  padding: 10px 14px;
+  background: rgba(200, 54, 75, 0.1);
+  border: 1px solid rgba(200, 54, 75, 0.4);
+  border-radius: 10px;
+  color: #f0a8b3;
+  font-size: 13px;
+  text-align: center;
+}
+.jg-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
 
 /* ── Success ── */
 .jg-success { text-align: center; padding: 16px 0; }

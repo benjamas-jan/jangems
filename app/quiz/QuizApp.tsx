@@ -15,6 +15,7 @@ import { Icon, animalIcons, desireIcons } from './icons';
 import { Gem } from './Gem';
 import { Brand } from '../components/Brand';
 import { SiteFooter } from '../components/SiteFooter';
+import { createProfile } from '../actions/profile';
 
 type Step = 'welcome' | 'q1' | 'q2' | 'q3' | 'loading' | 'result';
 
@@ -381,14 +382,45 @@ function Result({
   );
 }
 
-function Modal({ onClose }: { onClose: () => void }) {
+function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () => void }) {
   const [form, setForm] = useState({ name: '', phone: '', line: '' });
   const [done, setDone] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!form.name || form.phone.length < 9) return;
-    setDone(true);
+    if (submitting) return;
+    if (!form.name.trim()) {
+      setError('กรุณากรอกชื่อ');
+      return;
+    }
+    if (!/^0\d{9}$/.test(form.phone)) {
+      setError('เบอร์โทรต้อง 10 หลัก ขึ้นต้นด้วย 0');
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await createProfile({
+        name: form.name,
+        phone: form.phone,
+        line_id: form.line,
+        day: answers.day,
+        animal: answers.animal,
+        desire: answers.desire,
+      });
+      if (res.ok) {
+        setDone(true);
+      } else {
+        setError(res.error);
+      }
+    } catch (err) {
+      console.error(err);
+      setError('เกิดข้อผิดพลาด ลองใหม่อีกครั้ง');
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   if (done) {
@@ -470,8 +502,9 @@ function Modal({ onClose }: { onClose: () => void }) {
               onChange={(e) => setForm({ ...form, line: e.target.value })}
             />
           </div>
-          <button type="submit" className="jg-btn jg-btn-primary">
-            <Icon.Sparkle /> สร้าง Profile ของฉัน
+          {error && <p className="jg-modal-error">{error}</p>}
+          <button type="submit" className="jg-btn jg-btn-primary" disabled={submitting}>
+            <Icon.Sparkle /> {submitting ? 'กำลังบันทึก…' : 'สร้าง Profile ของฉัน'}
           </button>
           <p className="jg-modal-fineprint">
             ข้อมูลของคุณปลอดภัย ใช้เพื่อส่ง profile
@@ -585,7 +618,9 @@ export default function QuizApp() {
         />
       )}
 
-      {modalOpen && <Modal onClose={() => setModalOpen(false)} />}
+      {modalOpen && answers.day && answers.animal && answers.desire && (
+        <Modal answers={answers as Required<Answers>} onClose={() => setModalOpen(false)} />
+      )}
     </div>
   );
 }

@@ -15,6 +15,7 @@ import { Icon, animalIcons, desireIcons } from './icons';
 import { Gem } from './Gem';
 import { Brand } from '../components/Brand';
 import { SiteFooter } from '../components/SiteFooter';
+import { ThaiDatePicker } from '../components/ThaiDatePicker';
 import { createProfile } from '../actions/profile';
 
 type Step = 'welcome' | 'q1' | 'q2' | 'q3' | 'loading' | 'result';
@@ -388,8 +389,6 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
-  const todayIso = new Date().toISOString().slice(0, 10);
-
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (submitting) return;
@@ -502,12 +501,9 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
           </div>
           <div className="jg-field">
             <label>วันเกิด</label>
-            <input
-              type="date"
-              min="1900-01-01"
-              max={todayIso}
+            <ThaiDatePicker
               value={form.birthday}
-              onChange={(e) => setForm({ ...form, birthday: e.target.value })}
+              onChange={(v) => setForm({ ...form, birthday: v })}
             />
           </div>
           <div className="jg-field">

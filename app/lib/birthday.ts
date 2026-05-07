@@ -1,9 +1,50 @@
-// Helpers to derive astrological data from a birthday (YYYY-MM-DD).
+// Helpers to derive astrological data from a birthday (YYYY-MM-DD)
+// and to display dates in Thai Buddhist Era format.
 
 import { zodiacSigns, type ZodiacSign } from '../data/zodiac';
 import type { DayId } from '../quiz/data';
 
 const DAY_IDS: DayId[] = ['sun', 'mon', 'tue', 'wed', 'thu', 'fri', 'sat'];
+
+// ── Thai Buddhist Era display ────────────────────────────
+
+export const THAI_MONTHS_FULL = [
+  'มกราคม', 'กุมภาพันธ์', 'มีนาคม', 'เมษายน', 'พฤษภาคม', 'มิถุนายน',
+  'กรกฎาคม', 'สิงหาคม', 'กันยายน', 'ตุลาคม', 'พฤศจิกายน', 'ธันวาคม',
+];
+
+export const THAI_MONTHS_SHORT = [
+  'ม.ค.', 'ก.พ.', 'มี.ค.', 'เม.ย.', 'พ.ค.', 'มิ.ย.',
+  'ก.ค.', 'ส.ค.', 'ก.ย.', 'ต.ค.', 'พ.ย.', 'ธ.ค.',
+];
+
+/** Convert Gregorian year to Buddhist Era year. */
+export const toBE = (gregorianYear: number): number => gregorianYear + 543;
+
+/** Convert Buddhist Era year to Gregorian year. */
+export const fromBE = (buddhistYear: number): number => buddhistYear - 543;
+
+/** Number of days in a given Gregorian month (1-12). */
+export function daysInMonth(year: number, month: number): number {
+  // new Date(Y, M, 0) → last day of month M (1-12 here, but JS Date uses 0-11
+  // so passing month=5 gives May's day 0 = end of April. We want end of given
+  // month, so pass month directly: new Date(Y, monthIndex+1, 0) → end of monthIndex.
+  return new Date(Date.UTC(year, month, 0)).getUTCDate();
+}
+
+/** "2026-05-07" → "7 พฤษภาคม 2569" */
+export function displayThaiDate(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${THAI_MONTHS_FULL[m - 1]} ${toBE(y)}`;
+}
+
+/** "2026-05-07" → "7 พ.ค. 2569" */
+export function displayThaiDateShort(iso: string): string {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso)) return iso;
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${d} ${THAI_MONTHS_SHORT[m - 1]} ${toBE(y)}`;
+}
 
 /** Day-of-week from a YYYY-MM-DD string. */
 export function dayOfWeek(birthday: string): DayId {

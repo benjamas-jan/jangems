@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
+import { getSession } from '../lib/auth';
 
 export const metadata: Metadata = {
   title: 'ติดต่อ · JanGems',
@@ -52,10 +53,11 @@ const CONTACTS = [
   },
 ];
 
-export default function ContactPage() {
+export default async function ContactPage() {
+  const session = await getSession();
   return (
     <>
-      <SiteHeader />
+      <SiteHeader session={session} />
 
       <div className="jg-page">
         <div className="jg-page-hero">

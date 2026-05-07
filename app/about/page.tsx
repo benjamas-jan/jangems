@@ -2,16 +2,18 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
+import { getSession } from '../lib/auth';
 
 export const metadata: Metadata = {
   title: 'เกี่ยวกับเรา · JanGems',
   description: 'เรื่องราวของ JanGems และช่างฝีมือพลอยจังหวัดจันทบุรี',
 };
 
-export default function AboutPage() {
+export default async function AboutPage() {
+  const session = await getSession();
   return (
     <>
-      <SiteHeader />
+      <SiteHeader session={session} />
 
       <div className="jg-page">
         <div className="jg-page-hero">

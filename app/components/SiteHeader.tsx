@@ -4,8 +4,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Brand } from './Brand';
+import { logout } from '../actions/auth';
 
-const NAV = [
+const PUBLIC_NAV = [
   { href: '/', label: 'หน้าแรก' },
   { href: '/quiz', label: 'ทำนายพลอย' },
   { href: '/about', label: 'เกี่ยวกับเรา' },
@@ -13,7 +14,11 @@ const NAV = [
   { href: '/contact', label: 'ติดต่อ' },
 ];
 
-export function SiteHeader() {
+type Props = {
+  session: { phone: string; name: string } | null;
+};
+
+export function SiteHeader({ session }: Props) {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
 
@@ -51,7 +56,7 @@ export function SiteHeader() {
           <nav className="jg-nav-panel" onClick={(e) => e.stopPropagation()}>
             <div className="jg-nav-eyebrow jg-eyebrow">Menu</div>
             <ul>
-              {NAV.map((item) => {
+              {PUBLIC_NAV.map((item) => {
                 const active = item.href === '/' ? pathname === '/' : pathname.startsWith(item.href);
                 return (
                   <li key={item.href}>
@@ -62,6 +67,29 @@ export function SiteHeader() {
                 );
               })}
             </ul>
+
+            <div className="jg-nav-footer">
+              {session ? (
+                <>
+                  <div className="jg-nav-user">
+                    <div className="jg-nav-eyebrow jg-eyebrow">Logged in as</div>
+                    <div className="jg-nav-user-name">คุณ{session.name}</div>
+                  </div>
+                  <Link href="/dashboard" className="jg-btn jg-btn-primary jg-nav-cta">
+                    ✦ Dashboard
+                  </Link>
+                  <form action={logout}>
+                    <button type="submit" className="jg-btn jg-btn-ghost jg-nav-cta">
+                      ออกจากระบบ
+                    </button>
+                  </form>
+                </>
+              ) : (
+                <Link href="/login" className="jg-btn jg-btn-primary jg-nav-cta">
+                  ✦ เข้าสู่ระบบ
+                </Link>
+              )}
+            </div>
           </nav>
         </div>
       )}

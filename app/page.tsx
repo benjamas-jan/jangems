@@ -1,11 +1,13 @@
 import Link from 'next/link';
 import { SiteHeader } from './components/SiteHeader';
 import { SiteFooter } from './components/SiteFooter';
+import { getSession } from './lib/auth';
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession();
   return (
     <>
-      <SiteHeader />
+      <SiteHeader session={session} />
 
       <div className="jg-welcome jg-page-enter">
         <div className="jg-welcome-stars">✦ ✧ ✦</div>

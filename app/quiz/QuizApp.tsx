@@ -11,12 +11,15 @@ import {
   type AnimalId,
   type DesireId,
 } from './data';
+import { useRouter } from 'next/navigation';
 import { Icon, animalIcons, desireIcons } from './icons';
 import { Gem } from './Gem';
 import { Brand } from '../components/Brand';
 import { SiteFooter } from '../components/SiteFooter';
 import { ThaiDatePicker } from '../components/ThaiDatePicker';
+import { PinInput } from '../components/PinInput';
 import { createProfile } from '../actions/profile';
+import { checkPhone, setPin } from '../actions/auth';
 
 type Step = 'welcome' | 'q1' | 'q2' | 'q3' | 'loading' | 'result';
 
@@ -383,9 +386,14 @@ function Result({
   );
 }
 
+type ModalStep = 'form' | 'pin';
+
 function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () => void }) {
+  const router = useRouter();
+  const [step, setStep] = useState<ModalStep>('form');
   const [form, setForm] = useState({ name: '', phone: '', line: '', birthday: '' });
-  const [done, setDone] = useState(false);
+  const [pin1, setPin1] = useState('');
+  const [pin2, setPin2] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -416,11 +424,22 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
         animal: answers.animal,
         desire: answers.desire,
       });
-      if (res.ok) {
-        setDone(true);
-      } else {
+      if (!res.ok) {
         setError(res.error);
+        return;
       }
+      // Set the short-lived phone cookie so setPin() knows whose PIN to write
+      const phoneRes = await checkPhone(form.phone);
+      if (!phoneRes.ok) {
+        setError(phoneRes.error);
+        return;
+      }
+      if (phoneRes.status === 'has-pin') {
+        // Already had a PIN — odd, but redirect to login
+        router.push('/login/pin');
+        return;
+      }
+      setStep('pin');
     } catch (err) {
       console.error(err);
       setError('เกิดข้อผิดพลาด ลองใหม่อีกครั้ง');
@@ -429,42 +448,65 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
     }
   };
 
-  if (done) {
+  const submitPin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (submitting) return;
+    if (pin1.length !== 6 || pin2.length !== 6) {
+      setError('PIN ต้องเป็นตัวเลข 6 หลัก');
+      return;
+    }
+    setSubmitting(true);
+    setError(null);
+    try {
+      const res = await setPin(pin1, pin2);
+      if (!res.ok) {
+        setError(res.error);
+        return;
+      }
+      router.push('/dashboard');
+    } catch (err) {
+      console.error(err);
+      setError('เกิดข้อผิดพลาด ลองใหม่');
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  if (step === 'pin') {
     return (
       <div className="jg-modal-backdrop" onClick={onClose}>
         <div className="jg-modal" onClick={(e) => e.stopPropagation()}>
           <button className="jg-modal-close" onClick={onClose}>
             <Icon.Close />
           </button>
-          <div className="jg-success">
-            <div className="jg-success-icon">
-              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" strokeWidth="1.5">
-                <path d="M12 2l2.5 6L21 9l-5 4.5L17.5 20 12 17l-5.5 3L8 13.5 3 9l6.5-1z" fill="#D4A24C" fillOpacity="0.2" />
-              </svg>
+          <div className="jg-modal-eyebrow jg-eyebrow">ขั้นตอนสุดท้าย</div>
+          <h3 className="jg-modal-title">ตั้ง PIN 6 หลัก</h3>
+          <p className="jg-modal-sub">
+            คุณ{form.name} — ใช้เปิด Dashboard ของคุณ
+            <br />
+            ครั้งถัดไป
+          </p>
+          <form onSubmit={submitPin}>
+            <div className="jg-field">
+              <label>PIN ใหม่</label>
+              <PinInput value={pin1} onChange={setPin1} autoFocus />
             </div>
-            <div className="jg-eyebrow" style={{ marginBottom: 8 }}>
-              welcome
+            <div className="jg-field">
+              <label>ยืนยันอีกครั้ง</label>
+              <PinInput value={pin2} onChange={setPin2} />
             </div>
-            <h3 className="jg-modal-title">ยินดีต้อนรับ คุณ{form.name}</h3>
-            <p className="jg-modal-sub">
-              Profile ของคุณกำลังเตรียมพร้อม
-              <br />
-              แจนจะส่งรายละเอียดพลอยเสริมครบ 9 ด้าน
-              <br />
-              ทาง LINE ภายใน 24 ชั่วโมง
-            </p>
-            <div className="jg-success-preview">
-              <div className="jg-success-preview-grid">
-                {[...Array(9)].map((_, i) => (
-                  <div key={i} className="jg-success-preview-cell"></div>
-                ))}
-              </div>
-              <div className="jg-success-preview-overlay">9 gems unlocked</div>
-            </div>
-            <button className="jg-btn jg-btn-ghost" onClick={onClose} style={{ marginTop: 20, width: '100%' }}>
-              กลับสู่หน้าหลัก
+            {error && <p className="jg-modal-error">{error}</p>}
+            <button
+              type="submit"
+              className="jg-btn jg-btn-primary"
+              disabled={submitting || pin1.length !== 6 || pin2.length !== 6}
+            >
+              {submitting ? 'กำลังบันทึก…' : 'บันทึกและเข้า Dashboard'}
             </button>
-          </div>
+            <p className="jg-modal-fineprint">
+              ลืม PIN ต้องปรึกษาแจนผ่าน LINE เพื่อรีเซ็ต
+            </p>
+          </form>
         </div>
       </div>
     );

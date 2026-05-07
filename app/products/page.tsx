@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
+import { getSession } from '../lib/auth';
 
 export const metadata: Metadata = {
   title: 'สินค้า · JanGems',
@@ -39,10 +40,11 @@ function GemThumb() {
   );
 }
 
-export default function ProductsPage() {
+export default async function ProductsPage() {
+  const session = await getSession();
   return (
     <>
-      <SiteHeader />
+      <SiteHeader session={session} />
 
       <div className="jg-page">
         <div className="jg-page-hero">

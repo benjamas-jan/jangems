@@ -1,18 +1,11 @@
 import Link from 'next/link';
+import { SiteHeader } from './components/SiteHeader';
+import { SiteFooter } from './components/SiteFooter';
 
 export default function Home() {
   return (
     <>
-      <div className="jg-topbar">
-        <div className="jg-brand">
-          <svg className="jg-brand-mark" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" strokeWidth="1.4">
-            <path d="M12 2l3 5h5l-4 4 2 6-6-3-6 3 2-6-4-4h5z" fill="#D4A24C" fillOpacity="0.15" />
-          </svg>
-          <span className="jg-brand-name">
-            <b>Jan</b>Gems
-          </span>
-        </div>
-      </div>
+      <SiteHeader />
 
       <div className="jg-welcome jg-page-enter">
         <div className="jg-welcome-stars">✦ ✧ ✦</div>
@@ -35,13 +28,25 @@ export default function Home() {
         </div>
       </div>
 
-      <footer className="jg-footer">
-        <div className="jg-footer-divider"></div>
-        JanGems · Chanthaburi gems
-        <br />
-        <br />
-        Designed by <a href="https://chaivoot.com" target="_blank" rel="noopener noreferrer">Chaivoot</a>
-      </footer>
+      <section className="jg-home-tiles">
+        <Link href="/about" className="jg-home-tile">
+          <span className="jg-home-tile-eyebrow jg-eyebrow">Our story</span>
+          <span className="jg-home-tile-title">เกี่ยวกับ JanGems</span>
+          <span className="jg-home-tile-desc">เรื่องราวของช่างฝีมือ และพลอยจากจันทบุรี</span>
+        </Link>
+        <Link href="/products" className="jg-home-tile">
+          <span className="jg-home-tile-eyebrow jg-eyebrow">Made-to-order</span>
+          <span className="jg-home-tile-title">เครื่องประดับสั่งทำ</span>
+          <span className="jg-home-tile-desc">ตัวอย่างผลงานและวัสดุที่เลือกได้</span>
+        </Link>
+        <Link href="/contact" className="jg-home-tile">
+          <span className="jg-home-tile-eyebrow jg-eyebrow">Get in touch</span>
+          <span className="jg-home-tile-title">ติดต่อปรึกษา</span>
+          <span className="jg-home-tile-desc">สอบถามและสั่งทำผ่าน LINE</span>
+        </Link>
+      </section>
+
+      <SiteFooter />
     </>
   );
 }

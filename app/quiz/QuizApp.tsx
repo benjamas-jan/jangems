@@ -13,6 +13,8 @@ import {
 } from './data';
 import { Icon, animalIcons, desireIcons } from './icons';
 import { Gem } from './Gem';
+import { Brand } from '../components/Brand';
+import { SiteFooter } from '../components/SiteFooter';
 
 type Step = 'welcome' | 'q1' | 'q2' | 'q3' | 'loading' | 'result';
 
@@ -21,19 +23,6 @@ type Answers = {
   animal?: AnimalId;
   desire?: DesireId;
 };
-
-function Brand() {
-  return (
-    <div className="jg-brand">
-      <svg className="jg-brand-mark" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" strokeWidth="1.4">
-        <path d="M12 2l3 5h5l-4 4 2 6-6-3-6 3 2-6-4-4h5z" fill="#D4A24C" fillOpacity="0.15" />
-      </svg>
-      <span className="jg-brand-name">
-        <b>Jan</b>Gems
-      </span>
-    </div>
-  );
-}
 
 function Welcome({ onStart }: { onStart: () => void }) {
   return (
@@ -387,16 +376,7 @@ function Result({
         </button>
       </div>
 
-      <footer className="jg-footer">
-        <div className="jg-footer-divider"></div>
-        JanGems · Chanthaburi gems
-        <br />
-        <br />
-        Designed by{' '}
-        <a href="https://chaivoot.com" target="_blank" rel="noopener noreferrer">
-          Chaivoot
-        </a>
-      </footer>
+      <SiteFooter />
     </div>
   );
 }
@@ -577,9 +557,7 @@ export default function QuizApp() {
   return (
     <div data-screen-label={`JanGems ${step}`}>
       <div className="jg-topbar">
-        <Link href="/" style={{ textDecoration: 'none' }}>
-          <Brand />
-        </Link>
+        <Brand asLink />
         {step !== 'welcome' && step !== 'loading' && (
           <button
             className="jg-back"

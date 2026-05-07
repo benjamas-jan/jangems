@@ -383,10 +383,12 @@ function Result({
 }
 
 function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () => void }) {
-  const [form, setForm] = useState({ name: '', phone: '', line: '' });
+  const [form, setForm] = useState({ name: '', phone: '', line: '', birthday: '' });
   const [done, setDone] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const todayIso = new Date().toISOString().slice(0, 10);
 
   const submit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -399,6 +401,10 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
       setError('เบอร์โทรต้อง 10 หลัก ขึ้นต้นด้วย 0');
       return;
     }
+    if (!form.birthday) {
+      setError('กรุณากรอกวันเกิด');
+      return;
+    }
     setSubmitting(true);
     setError(null);
     try {
@@ -406,6 +412,7 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
         name: form.name,
         phone: form.phone,
         line_id: form.line,
+        birthday: form.birthday,
         day: answers.day,
         animal: answers.animal,
         desire: answers.desire,
@@ -491,6 +498,16 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
               placeholder="08x xxx xxxx"
               value={form.phone}
               onChange={(e) => setForm({ ...form, phone: e.target.value.replace(/\D/g, '') })}
+            />
+          </div>
+          <div className="jg-field">
+            <label>วันเกิด</label>
+            <input
+              type="date"
+              min="1900-01-01"
+              max={todayIso}
+              value={form.birthday}
+              onChange={(e) => setForm({ ...form, birthday: e.target.value })}
             />
           </div>
           <div className="jg-field">

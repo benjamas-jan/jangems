@@ -1,0 +1,1565 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"/>
+<title>JanGems — พลอยมงคลของคุณ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Trirong:wght@300;400;500;600&family=IBM+Plex+Sans+Thai:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+/* JanGems — Mystic Luxury */
+:root {
+  --jg-bg: #0E0A1A;
+  --jg-bg-2: #1A1230;
+  --jg-bg-3: #251A3E;
+  --jg-ink: #F2EAD6;
+  --jg-ink-dim: #A89B7E;
+  --jg-ink-faint: #6B5F4A;
+  --jg-gold: #D4A24C;
+  --jg-gold-bright: #E9BD63;
+  --jg-gold-dim: #8B6B2E;
+  --jg-rose: #B8869C;
+  --jg-line: rgba(212, 162, 76, 0.18);
+  --jg-line-strong: rgba(212, 162, 76, 0.4);
+  --font-display-en: 'Cormorant Garamond', serif;
+  --font-display-th: 'Trirong', serif;
+  --font-body: 'IBM Plex Sans Thai', 'IBM Plex Sans', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--jg-bg);
+  color: var(--jg-ink);
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overscroll-behavior: none;
+}
+
+/* Cosmic background — radial mist + subtle grain */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse 60% 40% at 50% 0%, rgba(212, 162, 76, 0.08), transparent 60%),
+    radial-gradient(ellipse 80% 50% at 80% 100%, rgba(184, 134, 156, 0.06), transparent 60%),
+    radial-gradient(ellipse 70% 60% at 10% 60%, rgba(122, 92, 158, 0.08), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/><feColorMatrix values='0 0 0 0 0.95  0 0 0 0 0.92  0 0 0 0 0.84  0 0 0 0.045 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+  opacity: 0.6;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+#app {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* ── Type ── */
+.jg-display {
+  font-family: var(--font-display-th);
+  font-weight: 400;
+  letter-spacing: 0.005em;
+  line-height: 1.25;
+  color: var(--jg-ink);
+}
+.jg-display-en {
+  font-family: var(--font-display-en);
+  font-weight: 400;
+  font-style: italic;
+  letter-spacing: 0.01em;
+}
+.jg-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--jg-gold);
+  font-weight: 400;
+}
+.jg-meta {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--jg-ink-dim);
+}
+.jg-gold { color: var(--jg-gold); }
+.jg-dim { color: var(--jg-ink-dim); }
+
+/* ── Top bar ── */
+.jg-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  position: relative;
+  z-index: 5;
+}
+.jg-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--jg-ink);
+}
+.jg-brand-mark {
+  width: 22px;
+  height: 22px;
+}
+.jg-brand-name {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+  color: var(--jg-ink);
+}
+.jg-brand-name b {
+  font-weight: 600;
+  font-style: normal;
+  color: var(--jg-gold);
+}
+
+/* ── Buttons ── */
+.jg-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 14px 22px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  color: var(--jg-ink);
+  text-decoration: none;
+}
+.jg-btn-primary {
+  background: linear-gradient(180deg, var(--jg-gold-bright), var(--jg-gold));
+  color: #1A1230;
+  border-color: var(--jg-gold);
+  box-shadow: 0 0 0 0 rgba(212, 162, 76, 0.4);
+}
+.jg-btn-primary:hover {
+  box-shadow: 0 0 24px 0 rgba(212, 162, 76, 0.35);
+}
+.jg-btn-ghost {
+  background: rgba(242, 234, 214, 0.04);
+  border-color: var(--jg-line);
+  color: var(--jg-ink);
+}
+.jg-btn-ghost:hover {
+  background: rgba(242, 234, 214, 0.07);
+  border-color: var(--jg-line-strong);
+}
+.jg-btn-icon {
+  width: 40px; height: 40px; padding: 0; border-radius: 50%;
+}
+
+/* ── Progress ── */
+.jg-progress {
+  display: flex;
+  gap: 6px;
+  padding: 0 24px 8px;
+}
+.jg-progress-dot {
+  flex: 1;
+  height: 2px;
+  background: rgba(242, 234, 214, 0.1);
+  position: relative;
+  overflow: hidden;
+}
+.jg-progress-dot.active::after,
+.jg-progress-dot.done::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--jg-gold-dim), var(--jg-gold));
+  animation: jg-fillBar 0.6s ease forwards;
+}
+.jg-progress-dot.done::after { animation: none; transform: none; }
+@keyframes jg-fillBar {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* ── Quiz ── */
+.jg-quiz {
+  padding: 8px 24px 32px;
+  min-height: calc(100vh - 80px);
+  display: flex;
+  flex-direction: column;
+}
+.jg-q-eyebrow {
+  margin-top: 18px;
+  margin-bottom: 14px;
+}
+.jg-q-title {
+  font-family: var(--font-display-th);
+  font-size: 28px;
+  font-weight: 400;
+  line-height: 1.3;
+  margin-bottom: 28px;
+  color: var(--jg-ink);
+  text-wrap: pretty;
+}
+.jg-q-title em {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  color: var(--jg-gold);
+  font-weight: 400;
+}
+
+.jg-options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 1;
+}
+.jg-opt {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 18px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+  color: var(--jg-ink);
+  font-size: 16px;
+  font-weight: 400;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  text-align: left;
+  font-family: var(--font-body);
+  position: relative;
+  overflow: hidden;
+}
+.jg-opt:hover {
+  background: rgba(212, 162, 76, 0.06);
+  border-color: var(--jg-line-strong);
+  transform: translateX(2px);
+}
+.jg-opt.selected {
+  background: rgba(212, 162, 76, 0.1);
+  border-color: var(--jg-gold);
+}
+.jg-opt-num {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--jg-gold-dim);
+  letter-spacing: 0.1em;
+  min-width: 22px;
+}
+.jg-opt-main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.jg-opt-label {
+  font-family: var(--font-display-th);
+  font-size: 18px;
+  color: var(--jg-ink);
+  letter-spacing: 0.01em;
+}
+.jg-opt-sub {
+  font-size: 12px;
+  color: var(--jg-ink-dim);
+  line-height: 1.5;
+}
+.jg-opt-arrow {
+  color: var(--jg-gold-dim);
+  opacity: 0;
+  transition: all 0.2s ease;
+}
+.jg-opt:hover .jg-opt-arrow {
+  opacity: 1;
+  transform: translateX(2px);
+}
+
+/* Animal opt with icon */
+.jg-opt-animal {
+  align-items: flex-start;
+  padding: 16px;
+}
+.jg-opt-animal-icon {
+  width: 44px; height: 44px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,162,76,0.15), rgba(212,162,76,0.02));
+  border: 1px solid var(--jg-line);
+  color: var(--jg-gold);
+}
+
+/* Back button */
+.jg-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  color: var(--jg-ink-dim);
+  font-size: 13px;
+  cursor: pointer;
+  padding: 6px 0;
+  font-family: var(--font-body);
+  white-space: nowrap;
+}
+.jg-back:hover { color: var(--jg-ink); }
+.jg-back:disabled { opacity: 0.3; cursor: not-allowed; }
+
+/* Page transitions */
+.jg-page-enter {
+  animation: jgFadeUp 0.5s ease both;
+}
+@keyframes jgFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* Day chips (Q1) — special layout */
+.jg-days {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+.jg-day {
+  padding: 18px 16px 20px;
+  min-height: 104px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--font-body);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  text-align: left;
+}
+.jg-day:hover {
+  background: rgba(212, 162, 76, 0.06);
+  border-color: var(--jg-line-strong);
+}
+.jg-day-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 12px currentColor;
+}
+.jg-day-name {
+  font-family: var(--font-display-th);
+  font-size: 19px;
+  color: var(--jg-ink);
+  line-height: 1.3;
+}
+.jg-day-color {
+  font-size: 11px;
+  font-family: var(--font-mono);
+  letter-spacing: 0.1em;
+  color: var(--jg-ink-dim);
+  text-transform: uppercase;
+}
+
+/* Footer hint */
+.jg-q-hint {
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid var(--jg-line);
+  font-size: 11px;
+  color: var(--jg-ink-faint);
+  font-family: var(--font-mono);
+  letter-spacing: 0.15em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* ── Gem SVG container ── */
+.jg-gem-wrap {
+  position: relative;
+  display: grid;
+  place-items: center;
+}
+.jg-gem-glow {
+  position: absolute;
+  inset: -40%;
+  background: radial-gradient(circle, var(--gem-glow, rgba(212,162,76,0.4)), transparent 60%);
+  filter: blur(20px);
+  pointer-events: none;
+  animation: jgPulse 4s ease-in-out infinite;
+}
+@keyframes jgPulse {
+  0%, 100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1;   transform: scale(1.08); }
+}
+.jg-gem-svg {
+  position: relative;
+  z-index: 2;
+  animation: jgFloat 6s ease-in-out infinite;
+}
+@keyframes jgFloat {
+  0%, 100% { transform: translateY(0) rotate(0); }
+  50%      { transform: translateY(-6px) rotate(2deg); }
+}
+
+/* ── Loading constellation ── */
+.jg-loader {
+  position: fixed;
+  inset: 0;
+  background: var(--jg-bg);
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  animation: jgFadeUp 0.4s ease;
+}
+.jg-loader-stage {
+  position: relative;
+  width: 220px;
+  height: 220px;
+}
+.jg-constellation {
+  position: absolute;
+  inset: 0;
+  animation: jgSpin 8s linear infinite;
+}
+@keyframes jgSpin {
+  to { transform: rotate(360deg); }
+}
+.jg-constellation-2 {
+  animation: jgSpin 12s linear infinite reverse;
+}
+.jg-loader-core {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+.jg-loader-core-inner {
+  width: 60px; height: 60px;
+  border-radius: 50%;
+  background: radial-gradient(circle, var(--jg-gold-bright), var(--jg-gold) 40%, transparent 70%);
+  filter: blur(2px);
+  animation: jgPulse 2s ease-in-out infinite;
+}
+.jg-loader-text {
+  font-family: var(--font-display-th);
+  font-size: 22px;
+  color: var(--jg-ink);
+  letter-spacing: 0.02em;
+}
+.jg-loader-sub {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  color: var(--jg-gold-dim);
+  text-transform: uppercase;
+}
+.jg-loader-dots {
+  display: inline-flex;
+  gap: 4px;
+}
+.jg-loader-dots span {
+  width: 4px; height: 4px;
+  border-radius: 50%;
+  background: var(--jg-gold);
+  animation: jgDot 1.4s ease-in-out infinite;
+}
+.jg-loader-dots span:nth-child(2) { animation-delay: 0.2s; }
+.jg-loader-dots span:nth-child(3) { animation-delay: 0.4s; }
+@keyframes jgDot {
+  0%, 60%, 100% { opacity: 0.2; }
+  30% { opacity: 1; }
+}
+
+/* ── Result page ── */
+.jg-result {
+  padding: 8px 24px 0;
+  position: relative;
+  animation: jgFadeUp 0.8s ease both;
+}
+.jg-result-eyebrow {
+  text-align: center;
+  margin: 14px 0 6px;
+}
+.jg-result-porn {
+  font-family: var(--font-display-th);
+  font-size: 36px;
+  font-weight: 400;
+  text-align: center;
+  color: var(--jg-ink);
+  margin-bottom: 6px;
+  letter-spacing: 0.01em;
+  animation: jgFadeUp 0.8s 0.2s ease both;
+}
+.jg-result-porn-en {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  color: var(--jg-gold);
+  font-size: 32px;
+}
+.jg-result-meta {
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.25em;
+  color: var(--jg-ink-dim);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+  animation: jgFadeUp 0.8s 0.3s ease both;
+}
+.jg-result-meta b {
+  color: var(--jg-gold);
+  font-weight: 500;
+}
+.jg-result-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin: 18px 0;
+  color: var(--jg-gold-dim);
+}
+.jg-result-divider::before,
+.jg-result-divider::after {
+  content: '';
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--jg-gold-dim), transparent);
+}
+
+.jg-result-hero {
+  display: grid;
+  place-items: center;
+  padding: 24px 0 32px;
+  animation: jgFadeUp 1s 0.4s ease both;
+}
+
+.jg-result-section {
+  border-top: 1px solid var(--jg-line);
+  padding: 28px 0;
+  animation: jgFadeUp 0.8s ease both;
+}
+.jg-result-section:nth-of-type(1) { animation-delay: 0.5s; }
+.jg-result-section:nth-of-type(2) { animation-delay: 0.6s; }
+.jg-result-section:nth-of-type(3) { animation-delay: 0.7s; }
+
+.jg-rs-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.jg-rs-label::before {
+  content: '';
+  width: 18px;
+  height: 1px;
+  background: var(--jg-gold);
+}
+.jg-rs-title {
+  font-family: var(--font-display-th);
+  font-size: 24px;
+  color: var(--jg-ink);
+  margin-top: 4px;
+  margin-bottom: 10px;
+  font-weight: 400;
+  line-height: 1.35;
+}
+.jg-rs-title-with-icon {
+  margin-top: 10px;
+}
+.jg-rs-desc {
+  color: var(--jg-ink-dim);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.jg-gem-row {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+.jg-gem-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  background: rgba(212, 162, 76, 0.06);
+  border: 1px solid var(--jg-line);
+  border-radius: 999px;
+  font-family: var(--font-display-th);
+  font-size: 14px;
+  color: var(--jg-ink);
+}
+.jg-gem-chip-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px currentColor;
+}
+
+.jg-quote {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  font-size: 18px;
+  color: var(--jg-gold);
+  margin-top: 12px;
+  padding-left: 14px;
+  border-left: 1px solid var(--jg-gold-dim);
+  line-height: 1.5;
+}
+.jg-quote-th {
+  font-family: var(--font-display-th);
+  font-style: normal;
+  font-size: 17px;
+  color: var(--jg-ink);
+  line-height: 1.6;
+  margin-top: 4px;
+}
+
+/* ── Share row ── */
+.jg-share-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 24px;
+}
+.jg-share-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 10px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: var(--jg-ink);
+  font-family: var(--font-body);
+  font-size: 12px;
+}
+.jg-share-btn:hover {
+  background: rgba(212, 162, 76, 0.08);
+  border-color: var(--jg-line-strong);
+}
+.jg-share-icon {
+  width: 26px; height: 26px;
+  display: grid; place-items: center;
+  color: var(--jg-gold);
+}
+
+/* CTA card */
+.jg-cta-card {
+  margin: 32px 0;
+  padding: 28px 24px;
+  background:
+    radial-gradient(ellipse at top, rgba(212, 162, 76, 0.12), transparent 60%),
+    rgba(26, 18, 48, 0.6);
+  border: 1px solid var(--jg-line-strong);
+  border-radius: 18px;
+  text-align: center;
+}
+.jg-cta-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+.jg-cta-title {
+  font-family: var(--font-display-th);
+  font-size: 22px;
+  color: var(--jg-ink);
+  margin-bottom: 16px;
+  line-height: 1.4;
+}
+.jg-cta-list {
+  text-align: left;
+  margin-bottom: 22px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.jg-cta-list-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--jg-ink);
+  line-height: 1.6;
+}
+.jg-cta-check {
+  color: var(--jg-gold);
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.jg-cta-list-item small {
+  display: block;
+  font-size: 12px;
+  color: var(--jg-ink-dim);
+  margin-top: 2px;
+}
+.jg-cta-fineprint {
+  margin-top: 12px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--jg-ink-faint);
+  text-transform: uppercase;
+}
+
+/* ── Modal ── */
+.jg-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(14, 10, 26, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  animation: jgFadeIn 0.3s ease;
+}
+@keyframes jgFadeIn { from { opacity: 0; } to { opacity: 1; } }
+.jg-modal {
+  width: 100%;
+  max-width: 420px;
+  background: linear-gradient(180deg, var(--jg-bg-2), var(--jg-bg));
+  border: 1px solid var(--jg-line-strong);
+  border-radius: 20px;
+  padding: 28px 24px;
+  position: relative;
+  animation: jgFadeUp 0.4s ease both;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+}
+.jg-modal-close {
+  position: absolute;
+  top: 14px; right: 14px;
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  border: 1px solid var(--jg-line);
+  background: transparent;
+  color: var(--jg-ink-dim);
+  cursor: pointer;
+  display: grid; place-items: center;
+}
+.jg-modal-close:hover { color: var(--jg-ink); border-color: var(--jg-line-strong); }
+.jg-modal-eyebrow { text-align: center; margin-bottom: 8px; }
+.jg-modal-title {
+  font-family: var(--font-display-th);
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 6px;
+}
+.jg-modal-sub {
+  text-align: center;
+  font-size: 13px;
+  color: var(--jg-ink-dim);
+  margin-bottom: 24px;
+}
+.jg-field {
+  margin-bottom: 14px;
+}
+.jg-field label {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.jg-field input {
+  width: 100%;
+  background: rgba(242, 234, 214, 0.04);
+  border: 1px solid var(--jg-line);
+  border-radius: 12px;
+  padding: 14px 16px;
+  color: var(--jg-ink);
+  font-family: var(--font-body);
+  font-size: 15px;
+  transition: all 0.2s ease;
+}
+.jg-field input:focus {
+  outline: none;
+  border-color: var(--jg-gold);
+  background: rgba(212, 162, 76, 0.06);
+}
+.jg-field input::placeholder { color: var(--jg-ink-faint); }
+.jg-modal .jg-btn {
+  width: 100%;
+  margin-top: 8px;
+}
+.jg-modal-fineprint {
+  margin-top: 14px;
+  font-size: 11px;
+  color: var(--jg-ink-faint);
+  text-align: center;
+  line-height: 1.5;
+}
+
+/* ── Success ── */
+.jg-success {
+  text-align: center;
+  padding: 16px 0;
+}
+.jg-success-icon {
+  width: 64px; height: 64px;
+  margin: 0 auto 18px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(212,162,76,0.25), transparent 70%);
+}
+.jg-success-preview {
+  margin-top: 22px;
+  padding: 18px;
+  border: 1px dashed var(--jg-line-strong);
+  border-radius: 14px;
+  position: relative;
+}
+.jg-success-preview-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  filter: blur(6px);
+  opacity: 0.6;
+}
+.jg-success-preview-cell {
+  aspect-ratio: 1;
+  border-radius: 10px;
+  background: linear-gradient(135deg, rgba(212,162,76,0.2), rgba(184,134,156,0.15));
+  border: 1px solid var(--jg-line);
+}
+.jg-success-preview-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, transparent, rgba(14,10,26,0.7) 70%);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  border-radius: 14px;
+}
+
+/* footer */
+.jg-footer {
+  text-align: center;
+  padding: 32px 24px 48px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--jg-ink-faint);
+  text-transform: uppercase;
+}
+.jg-footer-divider {
+  width: 30px;
+  height: 1px;
+  background: var(--jg-gold-dim);
+  margin: 0 auto 14px;
+}
+
+/* welcome screen */
+.jg-welcome {
+  padding: 60px 24px 40px;
+  text-align: center;
+  animation: jgFadeUp 0.8s ease both;
+}
+.jg-welcome-stars {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  letter-spacing: 0.6em;
+  color: var(--jg-gold);
+  margin-bottom: 24px;
+}
+.jg-welcome-eyebrow { margin-bottom: 18px; }
+.jg-welcome-title {
+  font-family: var(--font-display-th);
+  font-size: 38px;
+  font-weight: 400;
+  line-height: 1.2;
+  margin-bottom: 14px;
+  color: var(--jg-ink);
+  text-wrap: balance;
+}
+.jg-welcome-title em {
+  font-family: var(--font-display-en);
+  font-style: italic;
+  color: var(--jg-gold);
+}
+.jg-welcome-sub {
+  font-size: 15px;
+  color: var(--jg-ink-dim);
+  margin-bottom: 36px;
+  text-wrap: pretty;
+  line-height: 1.7;
+}
+.jg-welcome-meta {
+  margin-top: 28px;
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--jg-ink-faint);
+  text-transform: uppercase;
+}
+.jg-welcome-meta span {
+  display: flex; align-items: center; gap: 6px;
+}
+.jg-welcome-meta span::before {
+  content: '';
+  width: 4px; height: 4px;
+  background: var(--jg-gold);
+  border-radius: 50%;
+}
+</style>
+</head>
+<body>
+<div id="app"><div id="root"></div></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script>
+// JanGems quiz data — Thai astrology gem mapping
+window.JG_DATA = {
+  days: [
+    { id: 'sun',  th: 'อาทิตย์',     porn: 'รัตนาภรณ์',   color: 'แดง',         hex: '#C8364B', gems: ['ทับทิม', 'โกเมน', 'สปิเนลสีแดง'] },
+    { id: 'mon',  th: 'จันทร์',      porn: 'เศตาภรณ์',    color: 'เหลือง',      hex: '#E8C547', gems: ['อำพัน', 'ซิทริน', 'บุษราคัม'] },
+    { id: 'tue',  th: 'อังคาร',      porn: 'ตามภาภรณ์',   color: 'ชมพู',        hex: '#E8A1B8', gems: ['สปิเนลสีชมพู', 'พิ้งค์ทัวร์มาลีน', 'ไข่มุกสีชมพู'] },
+    { id: 'wed',  th: 'พุธ',         porn: 'อินทนิล',     color: 'เขียว',       hex: '#5BA381', gems: ['เพอริดอท', 'มรกต', 'หยก'] },
+    { id: 'thu',  th: 'พฤหัสบดี',    porn: 'ปิตาภรณ์',    color: 'ส้ม',         hex: '#E08A47', gems: ['สปิเนลสีส้ม', 'โอปอลไฟ', 'ปะการัง'] },
+    { id: 'fri',  th: 'ศุกร์',       porn: 'ปภัสราภรณ์',  color: 'ฟ้า',         hex: '#6B9DC4', gems: ['ไพลิน', 'อะความารีน', 'เทอร์คอยส์'] },
+    { id: 'sat',  th: 'เสาร์',       porn: 'กัณหาภรณ์',   color: 'ม่วง/ดำ',     hex: '#7A5C9E', gems: ['อเมทิสต์', 'สตาร์ดำ', 'นิลตะโก'] }
+  ],
+  animals: [
+    { id: 'cat',    th: 'แมว',    desc: 'มีเสน่ห์ มีโลกของตัวเอง' },
+    { id: 'dog',    th: 'หมา',    desc: 'ซื่อสัตย์ มีพลัง พร้อมลุยเพื่อคนที่รัก' },
+    { id: 'fish',   th: 'ปลา',    desc: 'สงบ ลึก ปล่อยให้ทุกอย่างไหลไป' },
+    { id: 'eagle',  th: 'อินทรี', desc: 'สง่า มอง vision ไกล ไม่กลัวที่จะบินสูง' }
+  ],
+  desires: [
+    { id: 'work',    th: 'การงาน ความสำเร็จ',  gem: 'ทับทิม',     meaning: 'ความสำเร็จ ลาภยศ อายุยืน' },
+    { id: 'love',    th: 'ความรัก เสน่ห์',      gem: 'บุษราคัม',   meaning: 'มีเสน่ห์เป็นที่รัก' },
+    { id: 'wealth',  th: 'โชคลาภ ทรัพย์',       gem: 'ไพลิน',      meaning: 'ความร่ำรวย ความรัก ความเมตตา' },
+    { id: 'protect', th: 'ปกป้อง คุ้มครอง',     gem: 'มรกต',       meaning: 'ป้องกันภัยอันตราย ความศรัทธา' }
+  ]
+};
+</script>
+
+<script type="text/babel">
+// Gem SVG renderer — stylized faceted gems by cut + color
+const { useMemo, useState, useEffect, useRef } = React;
+
+function gemCutForDay(dayId) {
+  return {
+    sun: 'cushion',  mon: 'round',   tue: 'oval',
+    wed: 'marquise', thu: 'cushion', fri: 'oval',
+    sat: 'round'
+  }[dayId] || 'cushion';
+}
+
+function lighten(hex, amt) {
+  const c = parseInt(hex.slice(1), 16);
+  const r = Math.min(255, ((c >> 16) & 255) + amt);
+  const g = Math.min(255, ((c >> 8) & 255) + amt);
+  const b = Math.min(255, (c & 255) + amt);
+  return `rgb(${r},${g},${b})`;
+}
+function darken(hex, amt) {
+  const c = parseInt(hex.slice(1), 16);
+  const r = Math.max(0, ((c >> 16) & 255) - amt);
+  const g = Math.max(0, ((c >> 8) & 255) - amt);
+  const b = Math.max(0, (c & 255) - amt);
+  return `rgb(${r},${g},${b})`;
+}
+
+function Gem({ color = '#E8A1B8', cut = 'cushion', size = 220 }) {
+  const id = useMemo(() => 'g' + Math.random().toString(36).slice(2, 8), []);
+  const light = lighten(color, 80);
+  const mid = color;
+  const dark = darken(color, 40);
+  const deeper = darken(color, 80);
+
+  let body = null;
+  if (cut === 'cushion') {
+    body = (
+      <g>
+        <path d="M30 80 Q30 30 80 30 L140 30 Q190 30 190 80 L190 140 Q190 190 140 190 L80 190 Q30 190 30 140 Z"
+              fill={`url(#${id}-bg)`} stroke={dark} strokeWidth="1" />
+        <path d="M70 70 L150 70 L150 150 L70 150 Z" fill={`url(#${id}-table)`} opacity="0.9" />
+        <path d="M30 80 L70 70 L70 150 L30 140 Z" fill={mid} opacity="0.6" />
+        <path d="M190 80 L150 70 L150 150 L190 140 Z" fill={deeper} opacity="0.7" />
+        <path d="M30 80 Q30 30 80 30 L140 30 Q190 30 190 80 L150 70 L70 70 Z" fill={light} opacity="0.5" />
+        <path d="M30 140 Q30 190 80 190 L140 190 Q190 190 190 140 L150 150 L70 150 Z" fill={deeper} opacity="0.55" />
+        <ellipse cx="90" cy="85" rx="20" ry="8" fill="white" opacity="0.45" />
+        <path d="M75 78 L100 70 L80 75 Z" fill="white" opacity="0.6" />
+      </g>
+    );
+  } else if (cut === 'oval') {
+    body = (
+      <g>
+        <ellipse cx="110" cy="110" rx="80" ry="95" fill={`url(#${id}-bg)`} stroke={dark} strokeWidth="1" />
+        <ellipse cx="110" cy="110" rx="50" ry="65" fill={`url(#${id}-table)`} opacity="0.85" />
+        <path d="M30 110 L60 60 L60 160 Z" fill={mid} opacity="0.55" />
+        <path d="M190 110 L160 60 L160 160 Z" fill={deeper} opacity="0.65" />
+        <path d="M110 15 L60 60 L160 60 Z" fill={light} opacity="0.6" />
+        <path d="M110 205 L60 160 L160 160 Z" fill={deeper} opacity="0.6" />
+        <ellipse cx="95" cy="80" rx="15" ry="22" fill="white" opacity="0.35" transform="rotate(-15 95 80)" />
+      </g>
+    );
+  } else if (cut === 'marquise') {
+    body = (
+      <g>
+        <path d="M110 15 Q190 110 110 205 Q30 110 110 15 Z"
+              fill={`url(#${id}-bg)`} stroke={dark} strokeWidth="1" />
+        <path d="M110 50 Q160 110 110 170 Q60 110 110 50 Z" fill={`url(#${id}-table)`} opacity="0.9" />
+        <path d="M110 15 L110 50 Q60 110 30 110 Z" fill={mid} opacity="0.55" />
+        <path d="M110 15 L110 50 Q160 110 190 110 Z" fill={light} opacity="0.55" />
+        <path d="M110 205 L110 170 Q60 110 30 110 Z" fill={deeper} opacity="0.65" />
+        <path d="M110 205 L110 170 Q160 110 190 110 Z" fill={deeper} opacity="0.55" />
+        <ellipse cx="95" cy="85" rx="10" ry="20" fill="white" opacity="0.4" transform="rotate(-20 95 85)" />
+      </g>
+    );
+  } else if (cut === 'round') {
+    body = (
+      <g>
+        <circle cx="110" cy="110" r="90" fill={`url(#${id}-bg)`} stroke={dark} strokeWidth="1" />
+        <circle cx="110" cy="110" r="55" fill={`url(#${id}-table)`} opacity="0.85" />
+        {[0, 45, 90, 135, 180, 225, 270, 315].map((deg, i) => (
+          <path
+            key={i}
+            d="M110 110 L110 20 L160 35 Z"
+            fill={i % 2 ? deeper : mid}
+            opacity={0.4 + (i % 3) * 0.15}
+            transform={`rotate(${deg} 110 110)`}
+          />
+        ))}
+        <ellipse cx="95" cy="85" rx="14" ry="18" fill="white" opacity="0.45" transform="rotate(-25 95 85)" />
+        <circle cx="80" cy="75" r="4" fill="white" opacity="0.7" />
+      </g>
+    );
+  }
+
+  return (
+    <div className="jg-gem-wrap" style={{ width: size, height: size, '--gem-glow': `${color}88` }}>
+      <div className="jg-gem-glow"></div>
+      <svg className="jg-gem-svg" viewBox="0 0 220 220" width={size} height={size}>
+        <defs>
+          <radialGradient id={`${id}-bg`} cx="40%" cy="35%">
+            <stop offset="0%" stopColor={light} />
+            <stop offset="50%" stopColor={mid} />
+            <stop offset="100%" stopColor={deeper} />
+          </radialGradient>
+          <linearGradient id={`${id}-table`} x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0%" stopColor={light} stopOpacity="0.9" />
+            <stop offset="100%" stopColor={mid} stopOpacity="0.6" />
+          </linearGradient>
+        </defs>
+        {body}
+        <circle cx="155" cy="65" r="1.5" fill="white" opacity="0.9" />
+        <circle cx="170" cy="120" r="1" fill="white" opacity="0.7" />
+        <circle cx="65" cy="160" r="1.2" fill="white" opacity="0.8" />
+      </svg>
+    </div>
+  );
+}
+
+// ── Icons ──
+const Icon = {
+  ArrowRight: () => <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>,
+  ArrowLeft: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>,
+  Check: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M5 12l5 5L20 7"/></svg>,
+  Close: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M6 6l12 12M18 6l-6 6-6 6"/></svg>,
+  FB: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.2c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.4H7.5V14h2.7v8h3.3z"/></svg>,
+  LINE: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.5 3 2 6.5 2 10.9c0 3.9 3.6 7.2 8.5 7.8.3.1.8.2.9.5.1.3.1.7.1.9 0 .2-.2 1-.2 1.2-.1.4-.3 1.4 1.2.8 1.5-.6 8-4.7 10.9-8 2-2.3 2.6-4.6 2.6-7.2C26 6.5 17.5 3 12 3zm-3.7 11.5H6.5c-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.4h1.5c.2 0 .3.1.3.3 0 .2-.1.3-.3.3zm1.2-.3c0 .2-.1.3-.3.3-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.7zm4.4 0c0 .2-.1.3-.3.3-.1 0-.2 0-.3-.1l-1.9-2.5v2.3c0 .2-.1.3-.3.3-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.1 0 .2 0 .3.1l1.9 2.5v-2.3c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.7zm2.7-1.9c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.4v.9h1.4c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.7c-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3h1.7c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.4v.9h1.4z"/></svg>,
+  Download: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3v13M7 11l5 5 5-5M5 21h14"/></svg>,
+  Sparkle: () => <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l1.5 7.5L21 11l-7.5 1.5L12 20l-1.5-7.5L3 11l7.5-1.5z"/></svg>,
+  Cat: () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M5 9l3 6c-1 1.5-1.5 3.5-1.5 5.5 0 4 3.5 6.5 9.5 6.5s9.5-2.5 9.5-6.5c0-2-.5-4-1.5-5.5l3-6-5.5 3c-1.5-.5-3.5-1-5.5-1s-4 .5-5.5 1L5 9z"/><circle cx="12" cy="19" r="0.8" fill="currentColor"/><circle cx="20" cy="19" r="0.8" fill="currentColor"/><path d="M16 22v2"/></svg>,
+  Dog: () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M8 7l-2 6 2 2v8c0 2 1 3 3 3h10c2 0 3-1 3-3v-8l2-2-2-6-3 4c-1.5-.5-3-.5-5-.5s-3.5 0-5 .5L8 7z"/><circle cx="13" cy="18" r="0.8" fill="currentColor"/><circle cx="19" cy="18" r="0.8" fill="currentColor"/><path d="M15 22h2"/></svg>,
+  Fish: () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M3 16c2-5 7-8 13-8 5 0 9 3 11 5l3-3v12l-3-3c-2 2-6 5-11 5-6 0-11-3-13-8z"/><circle cx="22" cy="14" r="0.8" fill="currentColor"/><path d="M9 13l-3 3 3 3M14 12l-2 4 2 4"/></svg>,
+  Eagle: () => <svg width="32" height="32" viewBox="0 0 32 32" fill="none" stroke="currentColor" strokeWidth="1.4"><path d="M16 6c-1 0-2 .5-2.5 1.5L12 11h8l-1.5-3.5C18 6.5 17 6 16 6z"/><path d="M3 18c3-2 6-3 9-3l4 5 4-5c3 0 6 1 9 3l-6 1-4 6h-6l-4-6-6-1z"/></svg>,
+  Briefcase: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2M3 13h18"/></svg>,
+  Heart: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 21s-7-4.5-9.5-9c-1.5-2.5 0-6.5 3.5-6.5 2 0 3.5 1.5 4 2.5.5-1 2-2.5 4-2.5 3.5 0 5 4 3.5 6.5C19 16.5 12 21 12 21z"/></svg>,
+  Coin: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><circle cx="12" cy="12" r="9"/><path d="M9 9h4.5a1.5 1.5 0 010 3H9m4.5 0H15m-6 3h5"/></svg>,
+  Shield: () => <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M12 3l8 3v6c0 5-4 9-8 9s-8-4-8-9V6l8-3z"/></svg>,
+};
+
+const animalIcons = { cat: Icon.Cat, dog: Icon.Dog, fish: Icon.Fish, eagle: Icon.Eagle };
+const desireIcons = { work: Icon.Briefcase, love: Icon.Heart, wealth: Icon.Coin, protect: Icon.Shield };
+
+const D = window.JG_DATA;
+
+function Brand() {
+  return (
+    <div className="jg-brand">
+      <svg className="jg-brand-mark" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" strokeWidth="1.4">
+        <path d="M12 2l3 5h5l-4 4 2 6-6-3-6 3 2-6-4-4h5z" fill="#D4A24C" fillOpacity="0.15"/>
+      </svg>
+      <span className="jg-brand-name"><b>Jan</b>Gems</span>
+    </div>
+  );
+}
+
+function Welcome({ onStart }) {
+  return (
+    <div className="jg-welcome jg-page-enter">
+      <div className="jg-welcome-stars">✦ ✧ ✦</div>
+      <div className="jg-welcome-eyebrow jg-eyebrow">Gem personality reading</div>
+      <h1 className="jg-welcome-title">
+        ค้นพบ<em>พลอยมงคล</em><br/>ที่เป็นของคุณ
+      </h1>
+      <p className="jg-welcome-sub">
+        ตอบ 3 คำถามสั้นๆ ตามตำราโหราศาสตร์ไทย<br/>
+        เพื่อค้นหาพลอยที่ส่งเสริมพลังของคุณโดยเฉพาะ
+      </p>
+      <button className="jg-btn jg-btn-primary" onClick={onStart} style={{padding:'16px 32px', fontSize:15}}>
+        เริ่มทำนาย <Icon.ArrowRight/>
+      </button>
+      <div className="jg-welcome-meta">
+        <span>3 คำถาม</span>
+        <span>1 นาที</span>
+        <span>ฟรี</span>
+      </div>
+    </div>
+  );
+}
+
+function Progress({ step }) {
+  return (
+    <div className="jg-progress">
+      {[0, 1, 2].map(i => (
+        <div key={i} className={`jg-progress-dot ${i < step ? 'done' : i === step ? 'active' : ''}`}></div>
+      ))}
+    </div>
+  );
+}
+
+function Q1({ onPick, onBack }) {
+  return (
+    <div className="jg-quiz jg-page-enter" key="q1">
+      <button className="jg-back" onClick={onBack}><Icon.ArrowLeft/> กลับ</button>
+      <div className="jg-q-eyebrow jg-eyebrow">คำถามที่ 01 / 03</div>
+      <h2 className="jg-q-title">คุณเกิด<em>วันอะไร?</em></h2>
+      <div className="jg-days">
+        {D.days.map(d => (
+          <button key={d.id} className="jg-day" onClick={() => onPick(d.id)}>
+            <span className="jg-day-dot" style={{background: d.hex, color: d.hex}}></span>
+            <span className="jg-day-name">วัน{d.th}</span>
+            <span className="jg-day-color">สี{d.color}</span>
+          </button>
+        ))}
+      </div>
+      <p className="jg-q-hint">— ตามตำราโหราศาสตร์ไทย —</p>
+    </div>
+  );
+}
+
+function Q2({ onPick, onBack }) {
+  return (
+    <div className="jg-quiz jg-page-enter" key="q2">
+      <button className="jg-back" onClick={onBack}><Icon.ArrowLeft/> กลับ</button>
+      <div className="jg-q-eyebrow jg-eyebrow">คำถามที่ 02 / 03</div>
+      <h2 className="jg-q-title">คุณคือคนแบบ<em>ไหน?</em></h2>
+      <div className="jg-options">
+        {D.animals.map((a, i) => {
+          const I = animalIcons[a.id];
+          return (
+            <button key={a.id} className="jg-opt jg-opt-animal" onClick={() => onPick(a.id)}>
+              <span className="jg-opt-animal-icon"><I/></span>
+              <span className="jg-opt-main">
+                <span className="jg-opt-label">{a.th}</span>
+                <span className="jg-opt-sub">{a.desc}</span>
+              </span>
+              <span className="jg-opt-arrow"><Icon.ArrowRight/></span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Q3({ onPick, onBack }) {
+  return (
+    <div className="jg-quiz jg-page-enter" key="q3">
+      <button className="jg-back" onClick={onBack}><Icon.ArrowLeft/> กลับ</button>
+      <div className="jg-q-eyebrow jg-eyebrow">คำถามที่ 03 / 03</div>
+      <h2 className="jg-q-title">อยากเสริม<em>เรื่องไหน?</em></h2>
+      <div className="jg-options">
+        {D.desires.map(x => {
+          const I = desireIcons[x.id];
+          return (
+            <button key={x.id} className="jg-opt jg-opt-animal" onClick={() => onPick(x.id)}>
+              <span className="jg-opt-animal-icon"><I/></span>
+              <span className="jg-opt-main">
+                <span className="jg-opt-label">{x.th}</span>
+                <span className="jg-opt-sub">เสริมพลัง{x.gem} · {x.meaning}</span>
+              </span>
+              <span className="jg-opt-arrow"><Icon.ArrowRight/></span>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
+function Loader() {
+  return (
+    <div className="jg-loader">
+      <div className="jg-loader-stage">
+        <svg className="jg-constellation" viewBox="0 0 220 220" width="220" height="220">
+          <g fill="none" stroke="#D4A24C" strokeWidth="0.6" opacity="0.55">
+            <circle cx="110" cy="110" r="95"/>
+            <circle cx="110" cy="110" r="80"/>
+          </g>
+          <g fill="#D4A24C">
+            <circle cx="110" cy="15" r="2.5"/>
+            <circle cx="200" cy="80" r="1.8"/>
+            <circle cx="180" cy="170" r="2.2"/>
+            <circle cx="80" cy="200" r="1.6"/>
+            <circle cx="20" cy="140" r="2"/>
+            <circle cx="40" cy="50" r="1.5"/>
+          </g>
+          <g stroke="#D4A24C" strokeWidth="0.4" opacity="0.4" fill="none">
+            <path d="M110 15 L200 80 L180 170 L80 200 L20 140 L40 50 Z"/>
+          </g>
+        </svg>
+        <svg className="jg-constellation jg-constellation-2" viewBox="0 0 220 220" width="220" height="220" style={{position:'absolute',inset:0}}>
+          <g fill="none" stroke="#B8869C" strokeWidth="0.5" opacity="0.4">
+            <circle cx="110" cy="110" r="60"/>
+          </g>
+          <g fill="#F2EAD6">
+            <circle cx="170" cy="110" r="1.2"/>
+            <circle cx="50" cy="110" r="1.2"/>
+            <circle cx="110" cy="50" r="1"/>
+            <circle cx="110" cy="170" r="1"/>
+          </g>
+        </svg>
+        <div className="jg-loader-core"><div className="jg-loader-core-inner"></div></div>
+      </div>
+      <div style={{textAlign:'center'}}>
+        <div className="jg-loader-text">กำลังคำนวณดวง<span className="jg-loader-dots"><span/><span/><span/></span></div>
+        <div className="jg-loader-sub" style={{marginTop:8}}>Reading the stars</div>
+      </div>
+    </div>
+  );
+}
+
+function SignupCard({ onClick }) {
+  return (
+    <div className="jg-cta-card">
+      <div className="jg-cta-eyebrow">✦ Unlock the full reading ✦</div>
+      <h3 className="jg-cta-title">อยากรู้พลอยที่ใช่<br/>สำหรับคุณจริงๆ?</h3>
+      <div className="jg-cta-list">
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check"><Icon.Check/></span>
+          <span>พลอยประจำตัวคุณแบบเต็ม<br/><small>ตามตำราโหราศาสตร์ไทย</small></span>
+        </div>
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check"><Icon.Check/></span>
+          <span>พลอยเสริม 9 ด้าน<br/><small>การงาน · ความรัก · โชคลาภ · ปกป้อง · เสน่ห์ · สุขภาพ · บารมี · สติปัญญา · คุ้มครอง</small></span>
+        </div>
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check"><Icon.Check/></span>
+          <span>คำแนะนำส่วนตัวจากแจน</span>
+        </div>
+      </div>
+      <button className="jg-btn jg-btn-primary" onClick={onClick} style={{width:'100%'}}>
+        <Icon.Sparkle/> สร้าง Profile (ใช้แค่เบอร์โทร)
+      </button>
+      <div className="jg-cta-fineprint">30 วินาที · ฟรีตลอดชีพ</div>
+    </div>
+  );
+}
+
+function Result({ answers, onSignup, onShare, onRestart }) {
+  const day = D.days.find(d => d.id === answers.day);
+  const animal = D.animals.find(a => a.id === answers.animal);
+  const desire = D.desires.find(x => x.id === answers.desire);
+  const cut = gemCutForDay(day.id);
+  const AnimalI = animalIcons[animal.id];
+
+  return (
+    <div className="jg-result">
+      <div className="jg-result-eyebrow jg-eyebrow">Your reading</div>
+      <h1 className="jg-result-porn">{day.porn}</h1>
+      <div className="jg-result-meta">
+        ผู้เกิดวัน<b>{day.th}</b> · สี<b>{day.color}</b>
+      </div>
+
+      <div className="jg-result-divider">
+        <svg width="10" height="10" viewBox="0 0 10 10"><path d="M5 0 L6 4 L10 5 L6 6 L5 10 L4 6 L0 5 L4 4 Z" fill="currentColor"/></svg>
+      </div>
+
+      <div className="jg-result-hero">
+        <Gem color={day.hex} cut={cut} size={240}/>
+      </div>
+
+      <div className="jg-result-section">
+        <div className="jg-rs-label">พลอยประจำตัว</div>
+        <div className="jg-rs-title">{day.gems[0]}</div>
+        <p className="jg-rs-desc">
+          ตามตำราโหราศาสตร์ไทย ผู้เกิดวัน{day.th}เป็น<b style={{color:'var(--jg-gold)'}}>{day.porn}</b> มีพลอยประจำตัวเป็นพลอยสี{day.color}
+        </p>
+        <div className="jg-gem-row">
+          {day.gems.map(g => (
+            <span key={g} className="jg-gem-chip">
+              <span className="jg-gem-chip-dot" style={{background: day.hex, color: day.hex}}></span>
+              {g}
+            </span>
+          ))}
+        </div>
+      </div>
+
+      <div className="jg-result-section">
+        <div className="jg-rs-label">บุคลิกของคุณ</div>
+        <div className="jg-rs-title jg-rs-title-with-icon" style={{display:'flex',alignItems:'center',gap:14}}>
+          <span style={{width:36,height:36,display:'grid',placeItems:'center',color:'var(--jg-gold)',flexShrink:0}}><AnimalI/></span>
+          คุณคือ{animal.th}
+        </div>
+        <p className="jg-rs-desc">{animal.desc}</p>
+      </div>
+
+      <div className="jg-result-section">
+        <div className="jg-rs-label">พลอยเสริม{desire.th.split(' ')[0]}</div>
+        <div className="jg-rs-title">{desire.gem}</div>
+        <p className="jg-rs-desc">
+          เสริมพลัง<b style={{color:'var(--jg-ink)'}}>{desire.th}</b>
+        </p>
+        <p className="jg-quote-th">"{desire.meaning}"</p>
+      </div>
+
+      <div className="jg-result-section">
+        <div className="jg-rs-label">แชร์ผลของคุณ</div>
+        <div className="jg-share-row">
+          <button className="jg-share-btn" onClick={() => onShare('fb')}>
+            <span className="jg-share-icon"><Icon.FB/></span>Facebook
+          </button>
+          <button className="jg-share-btn" onClick={() => onShare('line')}>
+            <span className="jg-share-icon"><Icon.LINE/></span>LINE
+          </button>
+          <button className="jg-share-btn" onClick={() => onShare('ig')}>
+            <span className="jg-share-icon"><Icon.Download/></span>IG Story
+          </button>
+        </div>
+      </div>
+
+      <SignupCard onClick={onSignup}/>
+
+      <div style={{textAlign:'center',marginTop:24}}>
+        <button className="jg-back" onClick={onRestart}>↺ ทำใหม่อีกครั้ง</button>
+      </div>
+
+      <footer className="jg-footer">
+        <div className="jg-footer-divider"></div>
+        JanGems · Chanthaburi gems
+      </footer>
+    </div>
+  );
+}
+
+function Modal({ onClose }) {
+  const [form, setForm] = useState({ name: '', phone: '', line: '' });
+  const [done, setDone] = useState(false);
+
+  const submit = (e) => {
+    e.preventDefault();
+    if (!form.name || form.phone.length < 9) return;
+    setDone(true);
+  };
+
+  if (done) {
+    return (
+      <div className="jg-modal-backdrop" onClick={onClose}>
+        <div className="jg-modal" onClick={e=>e.stopPropagation()}>
+          <button className="jg-modal-close" onClick={onClose}><Icon.Close/></button>
+          <div className="jg-success">
+            <div className="jg-success-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#D4A24C" strokeWidth="1.5">
+                <path d="M12 2l2.5 6L21 9l-5 4.5L17.5 20 12 17l-5.5 3L8 13.5 3 9l6.5-1z" fill="#D4A24C" fillOpacity="0.2"/>
+              </svg>
+            </div>
+            <div className="jg-eyebrow" style={{marginBottom:8}}>welcome</div>
+            <h3 className="jg-modal-title">ยินดีต้อนรับ คุณ{form.name}</h3>
+            <p className="jg-modal-sub">
+              Profile ของคุณกำลังเตรียมพร้อม<br/>
+              แจนจะส่งรายละเอียดพลอยเสริมครบ 9 ด้าน<br/>
+              ทาง LINE ภายใน 24 ชั่วโมง
+            </p>
+            <div className="jg-success-preview">
+              <div className="jg-success-preview-grid">
+                {[...Array(9)].map((_,i)=><div key={i} className="jg-success-preview-cell"></div>)}
+              </div>
+              <div className="jg-success-preview-overlay">9 gems unlocked</div>
+            </div>
+            <button className="jg-btn jg-btn-ghost" onClick={onClose} style={{marginTop:20,width:'100%'}}>
+              กลับสู่หน้าหลัก
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="jg-modal-backdrop" onClick={onClose}>
+      <div className="jg-modal" onClick={e=>e.stopPropagation()}>
+        <button className="jg-modal-close" onClick={onClose}><Icon.Close/></button>
+        <div className="jg-modal-eyebrow jg-eyebrow">Create profile</div>
+        <h3 className="jg-modal-title">Profile ของคุณ</h3>
+        <p className="jg-modal-sub">ใช้เวลา 30 วินาที · ฟรี ตลอดชีพ</p>
+        <form onSubmit={submit}>
+          <div className="jg-field">
+            <label>ชื่อเล่น</label>
+            <input type="text" placeholder="แอน, นิว, มาย…" value={form.name}
+                   onChange={e=>setForm({...form,name:e.target.value})}/>
+          </div>
+          <div className="jg-field">
+            <label>เบอร์โทร</label>
+            <input type="tel" maxLength="10" placeholder="08x xxx xxxx" value={form.phone}
+                   onChange={e=>setForm({...form,phone:e.target.value.replace(/\D/g,'')})}/>
+          </div>
+          <div className="jg-field">
+            <label>LINE ID (ถ้ามี)</label>
+            <input type="text" placeholder="@yourline" value={form.line}
+                   onChange={e=>setForm({...form,line:e.target.value})}/>
+          </div>
+          <button type="submit" className="jg-btn jg-btn-primary">
+            <Icon.Sparkle/> สร้าง Profile ของฉัน
+          </button>
+          <p className="jg-modal-fineprint">
+            ข้อมูลของคุณปลอดภัย ใช้เพื่อส่ง profile<br/>
+            และคำแนะนำเฉพาะที่คุณสนใจเท่านั้น
+          </p>
+        </form>
+      </div>
+    </div>
+  );
+}
+
+function App() {
+  const [step, setStep] = useState('welcome');
+  const [answers, setAnswers] = useState(() => {
+    try { return JSON.parse(localStorage.getItem('jg-answers') || '{}'); }
+    catch { return {}; }
+  });
+  const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem('jg-answers', JSON.stringify(answers));
+  }, [answers]);
+
+  useEffect(() => {
+    if (answers.day && answers.animal && answers.desire) {
+      if (step === 'welcome') setStep('result');
+    }
+  // eslint-disable-next-line
+  }, []);
+
+  const goQ1 = () => setStep('q1');
+  const pickDay    = id => { setAnswers(a=>({...a,day:id}));    setStep('q2'); };
+  const pickAnimal = id => { setAnswers(a=>({...a,animal:id})); setStep('q3'); };
+  const pickDesire = id => {
+    setAnswers(a=>({...a,desire:id}));
+    setStep('loading');
+    setTimeout(()=>setStep('result'), 2200);
+  };
+
+  const back = () => {
+    if (step === 'q1') setStep('welcome');
+    else if (step === 'q2') setStep('q1');
+    else if (step === 'q3') setStep('q2');
+  };
+
+  const restart = () => {
+    setAnswers({});
+    localStorage.removeItem('jg-answers');
+    setStep('welcome');
+  };
+
+  const onShare = (kind) => {
+    const url = window.location.href;
+    if (kind === 'line') window.open(`https://line.me/R/msg/text/?${encodeURIComponent('ผลทำนายพลอยมงคลของฉัน '+url)}`, '_blank');
+    else if (kind === 'fb') window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+    else alert('กำลังเตรียมรูปสำหรับ IG Story…');
+  };
+
+  const stepIndex = step === 'q1' ? 0 : step === 'q2' ? 1 : step === 'q3' ? 2 : -1;
+
+  return (
+    <div data-screen-label={`JanGems ${step}`}>
+      <div className="jg-topbar">
+        <Brand/>
+        {(step !== 'welcome' && step !== 'loading') && (
+          <button className="jg-back" onClick={restart} style={{fontSize:11,letterSpacing:'.15em',textTransform:'uppercase'}}>
+            ↺ ทำใหม่
+          </button>
+        )}
+      </div>
+
+      {stepIndex >= 0 && <Progress step={stepIndex}/>}
+
+      {step === 'welcome' && <Welcome onStart={goQ1}/>}
+      {step === 'q1' && <Q1 onPick={pickDay} onBack={back}/>}
+      {step === 'q2' && <Q2 onPick={pickAnimal} onBack={back}/>}
+      {step === 'q3' && <Q3 onPick={pickDesire} onBack={back}/>}
+      {step === 'loading' && <Loader/>}
+      {step === 'result' && (
+        <Result
+          answers={answers}
+          onSignup={()=>setModalOpen(true)}
+          onShare={onShare}
+          onRestart={restart}
+        />
+      )}
+
+      {modalOpen && <Modal onClose={()=>setModalOpen(false)}/>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>

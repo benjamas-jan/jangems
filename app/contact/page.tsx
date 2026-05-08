@@ -6,7 +6,7 @@ import { LINE_OA_URL, LINE_OA_LABEL } from '../lib/config';
 
 export const metadata: Metadata = {
   title: 'ติดต่อ · JanGems',
-  description: 'ติดต่อ JanGems ผ่าน LINE, โทร, หรือไปที่ร้านที่จันทบุรี',
+  description: 'ติดต่อ JanGems ผ่าน LINE Official หรือไปที่ร้านเบญจจิวเวอรี่ที่จันทบุรี',
 };
 
 const CONTACTS = [
@@ -20,17 +20,33 @@ const CONTACTS = [
       </svg>
     ),
   },
+];
+
+const STORES = [
   {
-    label: 'โทรศัพท์',
-    value: '08X-XXX-XXXX',
-    href: 'tel:+660000000000',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0122 16.92z" />
-      </svg>
-    ),
+    name: 'ร้านเบญจจิวเวอรี่ · KP Grand',
+    location: 'โรงแรมเคพีแกรนด์',
+    address:
+      '35 200-201 ถนนตรีรัตน์ ตำบลจันทนิมิต อำเภอเมืองจันทบุรี จังหวัดจันทบุรี 22000',
+    mapsQuery: 'เบญจจิวเวอรี่ KP Grand โรงแรมเคพีแกรนด์ จันทบุรี',
+  },
+  {
+    name: 'ร้านเบญจจิวเวอรี่ · ร้านต้นตำรับของฝากจันทบุรี',
+    location: null,
+    address:
+      '81/38 ถนนสุขุมวิท ตำบลพลับพลา อำเภอเมืองจันทบุรี จังหวัดจันทบุรี 22000',
+    mapsQuery: 'เบญจจิวเวอรี่ ร้านต้นตำรับของฝากจันทบุรี',
   },
 ];
+
+function PinIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z" />
+      <circle cx="12" cy="10" r="3" />
+    </svg>
+  );
+}
 
 export default async function ContactPage() {
   const session = await getSession();
@@ -45,7 +61,8 @@ export default async function ContactPage() {
             ติดต่อ<em>JanGems</em>
           </h1>
           <p className="jg-page-sub">
-            สอบถามรายละเอียด ปรึกษาดีไซน์<br />
+            สอบถามรายละเอียด ปรึกษาดีไซน์
+            <br />
             หรือสั่งทำเครื่องประดับเฉพาะคุณ
           </p>
         </div>
@@ -55,7 +72,13 @@ export default async function ContactPage() {
           <h2 className="jg-section-title">เลือกช่องทางที่สะดวกที่สุด</h2>
           <div className="jg-contact-list">
             {CONTACTS.map((c) => (
-              <a key={c.label} href={c.href} className="jg-contact-item">
+              <a
+                key={c.label}
+                href={c.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="jg-contact-item"
+              >
                 <span className="jg-contact-icon">{c.icon}</span>
                 <span className="jg-contact-main">
                   <span className="jg-contact-label">{c.label}</span>
@@ -68,26 +91,45 @@ export default async function ContactPage() {
         </section>
 
         <section className="jg-section">
-          <div className="jg-section-label">ที่ตั้งร้าน</div>
-          <h2 className="jg-section-title">JanGems · จันทบุรี</h2>
-          <div className="jg-section-body">
+          <div className="jg-section-label">ที่ตั้งร้าน · 2 สาขา</div>
+          <h2 className="jg-section-title">ร้านเบญจจิวเวอรี่ · จันทบุรี</h2>
+
+          <div className="jg-stores">
+            {STORES.map((s) => (
+              <a
+                key={s.name}
+                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(s.mapsQuery)}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="jg-store-card"
+              >
+                <span className="jg-store-icon">
+                  <PinIcon />
+                </span>
+                <span className="jg-store-main">
+                  <span className="jg-store-name">{s.name}</span>
+                  {s.location && <span className="jg-store-location">{s.location}</span>}
+                  <span className="jg-store-address">{s.address}</span>
+                  <span className="jg-store-cta">เปิดใน Google Maps →</span>
+                </span>
+              </a>
+            ))}
+          </div>
+
+          <div className="jg-section-body" style={{ marginTop: 18 }}>
             <p>
-              <strong>ที่อยู่</strong><br />
-              XX ถนนพลอย ตำบล/อำเภอ จังหวัดจันทบุรี XXXXX
+              <strong>เวลาทำการ</strong>
+              <br />
+              ทุกวัน · 10:00 - 16:30 น.
             </p>
             <p>
-              <strong>เวลาทำการ</strong><br />
-              จันทร์ - เสาร์ · 10:00 - 18:00 น.
-            </p>
-            <p>
-              <strong>หมายเหตุ</strong><br />
-              สำหรับลูกค้าที่ต้องการชมเครื่องประดับหรือพลอยที่หน้าร้าน
+              <strong>หมายเหตุ</strong>
+              <br />
+              ลูกค้าที่ต้องการชมพลอยหรือเครื่องประดับที่หน้าร้าน
               กรุณานัดหมายล่วงหน้าผ่าน LINE
             </p>
           </div>
         </section>
-
-        <p className="jg-placeholder-note">— ข้อมูลติดต่อ placeholder · พร้อมให้แก้ไข —</p>
       </div>
 
       <SiteFooter />

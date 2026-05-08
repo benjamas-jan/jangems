@@ -30,28 +30,6 @@ const CONTACTS = [
       </svg>
     ),
   },
-  {
-    label: 'Instagram',
-    value: '@jangems',
-    href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-        <rect x="2" y="2" width="20" height="20" rx="5" />
-        <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z" />
-        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-      </svg>
-    ),
-  },
-  {
-    label: 'Facebook',
-    value: 'JanGems',
-    href: '#',
-    icon: (
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
-        <path d="M13.5 22v-8h2.7l.4-3.2h-3.1V8.7c0-.9.3-1.6 1.6-1.6h1.7V4.2c-.3 0-1.3-.1-2.5-.1-2.4 0-4.1 1.5-4.1 4.2v2.4H7.5V14h2.7v8h3.3z" />
-      </svg>
-    ),
-  },
 ];
 
 export default async function ContactPage() {

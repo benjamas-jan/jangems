@@ -1096,6 +1096,92 @@ a { color: inherit; text-decoration: none; }
   text-align: center;
   line-height: 1.6;
 }
+
+/* Preview banner (above sections) */
+.jg-preview-banner {
+  margin: 0 0 16px;
+  padding: 10px 14px;
+  background: rgba(212, 162, 76, 0.06);
+  border: 1px solid var(--jg-line);
+  border-radius: 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--jg-gold-dim);
+  text-align: center;
+  text-transform: uppercase;
+}
+
+/* Trait grid (strengths / weaknesses) */
+.jg-trait-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 18px;
+}
+.jg-trait-card {
+  padding: 14px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 12px;
+}
+.jg-trait-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.jg-trait-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.jg-trait-list li {
+  font-family: var(--font-display-th);
+  font-size: 14px;
+  color: var(--jg-ink);
+  line-height: 1.5;
+  padding-left: 14px;
+  position: relative;
+}
+.jg-trait-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.7em;
+  width: 6px;
+  height: 1px;
+  background: var(--jg-gold-dim);
+}
+
+/* Advice block */
+.jg-advice {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background:
+    radial-gradient(ellipse at 0% 50%, rgba(212, 162, 76, 0.08), transparent 70%),
+    rgba(26, 18, 48, 0.4);
+  border-left: 2px solid var(--jg-gold);
+  border-radius: 8px;
+}
+.jg-advice-label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.25em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+.jg-advice p {
+  font-size: 14px;
+  color: var(--jg-ink);
+  line-height: 1.7;
+}
 .jg-modal .jg-btn {
   width: 100%;
   margin-top: 8px;

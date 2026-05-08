@@ -65,18 +65,43 @@ export default async function DashboardPage() {
           )}
         </section>
 
+        <div className="jg-preview-banner">
+          เนื้อหา preview · เนื้อหาบางส่วนกำลังตรวจสอบกับผู้เชี่ยวชาญ
+        </div>
+
         {/* Section: พลอยประจำวันเกิด */}
         {day && (
           <section className="jg-section">
             <div className="jg-section-label">พลอยประจำวันเกิด</div>
             <h2 className="jg-section-title">วัน{day.th} · {day.porn}</h2>
             <div className="jg-section-body">
-              <p>
-                ตามตำราโหราศาสตร์ไทย ผู้เกิดวัน{day.th}เป็น
-                <strong style={{ color: 'var(--jg-gold)' }}> {day.porn}</strong>
-                {' '}มีพลอยประจำตัวเป็นพลอยสี{day.color}
-              </p>
+              <p>{day.personality}</p>
             </div>
+
+            <div className="jg-trait-grid">
+              <div className="jg-trait-card">
+                <div className="jg-trait-label">จุดแข็ง</div>
+                <ul className="jg-trait-list">
+                  {day.strengths.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="jg-trait-card">
+                <div className="jg-trait-label">จุดควรระวัง</div>
+                <ul className="jg-trait-list">
+                  {day.weaknesses.map((w) => (
+                    <li key={w}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="jg-advice">
+              <div className="jg-advice-label">คำแนะนำพลอย</div>
+              <p>{day.advice}</p>
+            </div>
+
             <div className="jg-gem-row">
               {day.gems.map((g) => (
                 <span key={g} className="jg-gem-chip">
@@ -100,12 +125,36 @@ export default async function DashboardPage() {
               ราศี{zodiac.th} {zodiac.symbol}
             </h2>
             <div className="jg-section-body">
+              <p>{zodiac.personality}</p>
+            </div>
+
+            <div className="jg-trait-grid">
+              <div className="jg-trait-card">
+                <div className="jg-trait-label">จุดแข็ง</div>
+                <ul className="jg-trait-list">
+                  {zodiac.strengths.map((s) => (
+                    <li key={s}>{s}</li>
+                  ))}
+                </ul>
+              </div>
+              <div className="jg-trait-card">
+                <div className="jg-trait-label">จุดควรระวัง</div>
+                <ul className="jg-trait-list">
+                  {zodiac.weaknesses.map((w) => (
+                    <li key={w}>{w}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            <div className="jg-advice">
+              <div className="jg-advice-label">พลอยของราศี{zodiac.th}</div>
               <p>
-                ผู้เกิดราศี{zodiac.th} ตามความเชื่อสากล นิยมใช้พลอย
-                <strong style={{ color: 'var(--jg-gold)' }}> {zodiac.gemTh}</strong>
-                {' '}({zodiac.gemEn}) เป็นเครื่องประดับเสริมพลัง
+                <strong style={{ color: 'var(--jg-gold)' }}>{zodiac.gemTh}</strong>
+                {' '}({zodiac.gemEn}) — {zodiac.advice}
               </p>
             </div>
+
             <div className="jg-gem-row">
               <span className="jg-gem-chip">
                 <span
@@ -119,22 +168,7 @@ export default async function DashboardPage() {
           </section>
         )}
 
-        {/* Section: พลอยนพเก้า */}
-        <section className="jg-section">
-          <div className="jg-section-label">พลอยนพเก้า</div>
-          <h2 className="jg-section-title">9 พลอยศักดิ์สิทธิ์</h2>
-          <div className="jg-section-body">
-            <p>
-              พลอยนพเก้าตามความเชื่ออินเดีย-ไทย เป็นพลอย 9 ชนิด
-              ที่ผูกพันกับ <strong>9 ดาวประจำในจักรวาล</strong>
-              นิยมทำเป็นแหวนหรือจี้ครบเซตเพื่อพลังคุ้มครองรอบด้าน
-            </p>
-          </div>
-          <NavaratnaGrid highlightHex={day?.hex} />
-          <CtaConsult label="ปรึกษาแจนสั่งทำพลอยนพเก้าครบเซต" />
-        </section>
-
-        {/* Section: พลอยเสริมตามด้านที่เลือก */}
+        {/* Section: พลอยเสริมที่คุณเลือก */}
         {desire && (
           <section className="jg-section">
             <div className="jg-section-label">พลอยเสริม{desire.th.split(' ')[0]}</div>
@@ -147,9 +181,29 @@ export default async function DashboardPage() {
               </p>
               <p className="jg-quote-th">&ldquo;{desire.meaning}&rdquo;</p>
             </div>
+
+            <div className="jg-advice">
+              <div className="jg-advice-label">วิธีใส่ที่นิยม</div>
+              <p>{desire.advice}</p>
+            </div>
+
             <CtaConsult label={`ปรึกษาแจนสั่งทำพลอย${desire.gem}`} />
           </section>
         )}
+
+        {/* Section: พลอยนพเก้า — 9 ด้านชีวิต */}
+        <section className="jg-section">
+          <div className="jg-section-label">พลอยนพเก้า · 9 ด้านชีวิต</div>
+          <h2 className="jg-section-title">9 พลอยศักดิ์สิทธิ์</h2>
+          <div className="jg-section-body">
+            <p>
+              พลอย 9 ชนิดผูกพันกับ <strong>9 ดาวประจำในจักรวาล</strong>
+              แต่ละชนิดส่งเสริมด้านชีวิตที่ต่างกัน — งาน รัก โชค คุ้มครอง สุขภาพ ปัญญา
+            </p>
+          </div>
+          <NavaratnaGrid highlightHex={day?.hex} />
+          <CtaConsult label="ปรึกษาแจนสั่งทำพลอยนพเก้าครบเซต" />
+        </section>
 
         {/* Section: บัญชี */}
         <section className="jg-section">

@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 const CONTACTS = [
   {
     label: 'LINE Official',
-    value: 'เพิ่มเพื่อน · ' + LINE_OA_LABEL,
+    value: LINE_OA_LABEL,
     href: LINE_OA_URL,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">

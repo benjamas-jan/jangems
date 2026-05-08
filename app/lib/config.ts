@@ -1,8 +1,7 @@
 // Site-wide config (URLs, externally managed identifiers).
-// Replace placeholders with real values when available.
 
-// LINE Official Account URL — main consultation/sales channel.
-// Get from LINE Official Account Manager → Account Settings → Add Friend URL.
-// TODO: replace with real lin.ee URL when available.
-export const LINE_OA_URL = '#line-oa-pending';
-export const LINE_OA_LABEL = '@jangems';
+// LINE Official Account — main consultation/sales channel.
+// Format: https://line.me/R/ti/p/@<id>
+export const LINE_OA_ID = '@jmm5836r';
+export const LINE_OA_URL = `https://line.me/R/ti/p/${LINE_OA_ID}`;
+export const LINE_OA_LABEL = LINE_OA_ID;

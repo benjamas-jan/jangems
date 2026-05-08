@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { PinInput } from '../../components/PinInput';
 import { loginWithPin } from '../../actions/auth';
+import { LINE_OA_URL } from '../../lib/config';
 
 export function LoginPinForm() {
   const router = useRouter();
@@ -45,7 +46,11 @@ export function LoginPinForm() {
         {submitting ? 'กำลังตรวจสอบ…' : 'เข้าสู่ระบบ'}
       </button>
       <p className="jg-modal-fineprint">
-        ลืม PIN? <a href="#" style={{ color: 'var(--jg-gold)' }}>ปรึกษาแจนผ่าน LINE</a> เพื่อรีเซ็ต
+        ลืม PIN?{' '}
+        <a href={LINE_OA_URL} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--jg-gold)' }}>
+          ปรึกษาแจนผ่าน LINE
+        </a>{' '}
+        เพื่อรีเซ็ต
       </p>
     </form>
   );

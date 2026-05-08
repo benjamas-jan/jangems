@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { getSession } from '../lib/auth';
+import { LINE_OA_URL, LINE_OA_LABEL } from '../lib/config';
 
 export const metadata: Metadata = {
   title: 'ติดต่อ · JanGems',
@@ -11,8 +12,8 @@ export const metadata: Metadata = {
 const CONTACTS = [
   {
     label: 'LINE Official',
-    value: '@jangems',
-    href: '#',
+    value: LINE_OA_LABEL,
+    href: LINE_OA_URL,
     icon: (
       <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
         <path d="M12 3C6.5 3 2 6.5 2 10.9c0 3.9 3.6 7.2 8.5 7.8.3.1.8.2.9.5.1.3.1.7.1.9 0 .2-.2 1-.2 1.2-.1.4-.3 1.4 1.2.8 1.5-.6 8-4.7 10.9-8 2-2.3 2.6-4.6 2.6-7.2C26 6.5 17.5 3 12 3zm-3.7 11.5H6.5c-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.4h1.5c.2 0 .3.1.3.3 0 .2-.1.3-.3.3zm1.2-.3c0 .2-.1.3-.3.3-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.7zm4.4 0c0 .2-.1.3-.3.3-.1 0-.2 0-.3-.1l-1.9-2.5v2.3c0 .2-.1.3-.3.3-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3.1 0 .2 0 .3.1l1.9 2.5v-2.3c0-.2.1-.3.3-.3.2 0 .3.1.3.3v3.7zm2.7-1.9c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.4v.9h1.4c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.7c-.2 0-.3-.1-.3-.3v-3.7c0-.2.1-.3.3-.3h1.7c.2 0 .3.1.3.3 0 .2-.1.3-.3.3h-1.4v.9h1.4z" />

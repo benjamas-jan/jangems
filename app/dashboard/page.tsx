@@ -5,7 +5,10 @@ import { SiteFooter } from '../components/SiteFooter';
 import { getSession } from '../lib/auth';
 import { supabaseAdmin } from '../lib/supabase';
 import { displayThaiDate, dayOfWeek, zodiacFor } from '../lib/birthday';
-import { days } from '../quiz/data';
+import { days, animals, desires, gemCutForDay } from '../quiz/data';
+import { Gem } from '../quiz/Gem';
+import { CtaConsult } from './CtaConsult';
+import { NavaratnaGrid } from './NavaratnaGrid';
 
 export const metadata: Metadata = {
   title: 'Dashboard · JanGems',
@@ -22,65 +25,162 @@ export default async function DashboardPage() {
     .eq('phone', session.phone)
     .maybeSingle();
 
-  if (!profile) {
-    redirect('/login');
-  }
+  if (!profile) redirect('/login');
 
   const dayId = profile.birthday ? dayOfWeek(profile.birthday) : profile.day;
-  const day = days.find((d) => d.id === dayId);
+  const day = dayId ? days.find((d) => d.id === dayId) ?? null : null;
   const zodiac = profile.birthday ? zodiacFor(profile.birthday) : null;
+  const animal = profile.animal ? animals.find((a) => a.id === profile.animal) ?? null : null;
+  const desire = profile.desire ? desires.find((x) => x.id === profile.desire) ?? null : null;
+
+  const phoneFmt = profile.phone.length === 10
+    ? `${profile.phone.slice(0, 3)}-${profile.phone.slice(3, 6)}-${profile.phone.slice(6)}`
+    : profile.phone;
 
   return (
     <>
       <SiteHeader session={session} />
 
       <div className="jg-page">
-        <div className="jg-page-hero">
+        {/* Hero */}
+        <section className="jg-dash-hero">
           <div className="jg-page-eyebrow jg-eyebrow">Your reading</div>
           <h1 className="jg-page-title">
             ยินดีต้อนรับ<br />
             <em>คุณ{session.name}</em>
           </h1>
-        </div>
+          {(profile.birthday || day || zodiac) && (
+            <p className="jg-dash-meta">
+              {profile.birthday && <span>{displayThaiDate(profile.birthday)}</span>}
+              {day && <span>วัน{day.th}</span>}
+              {zodiac && <span>ราศี{zodiac.th} {zodiac.symbol}</span>}
+            </p>
+          )}
+          {day && (
+            <div className="jg-dash-hero-gem">
+              <Gem color={day.hex} cut={gemCutForDay(day.id)} size={200} />
+              <div className="jg-dash-porn">{day.porn}</div>
+              <div className="jg-dash-porn-meta">สี{day.color}</div>
+            </div>
+          )}
+        </section>
 
+        {/* Section: พลอยประจำวันเกิด */}
+        {day && (
+          <section className="jg-section">
+            <div className="jg-section-label">พลอยประจำวันเกิด</div>
+            <h2 className="jg-section-title">วัน{day.th} · {day.porn}</h2>
+            <div className="jg-section-body">
+              <p>
+                ตามตำราโหราศาสตร์ไทย ผู้เกิดวัน{day.th}เป็น
+                <strong style={{ color: 'var(--jg-gold)' }}> {day.porn}</strong>
+                {' '}มีพลอยประจำตัวเป็นพลอยสี{day.color}
+              </p>
+            </div>
+            <div className="jg-gem-row">
+              {day.gems.map((g) => (
+                <span key={g} className="jg-gem-chip">
+                  <span
+                    className="jg-gem-chip-dot"
+                    style={{ background: day.hex, color: day.hex }}
+                  ></span>
+                  {g}
+                </span>
+              ))}
+            </div>
+            <CtaConsult label={`ปรึกษาแจนสั่งทำพลอยวัน${day.th}`} />
+          </section>
+        )}
+
+        {/* Section: พลอยประจำราศี */}
+        {zodiac && (
+          <section className="jg-section">
+            <div className="jg-section-label">พลอยประจำราศี</div>
+            <h2 className="jg-section-title">
+              ราศี{zodiac.th} {zodiac.symbol}
+            </h2>
+            <div className="jg-section-body">
+              <p>
+                ผู้เกิดราศี{zodiac.th} ตามความเชื่อสากล นิยมใช้พลอย
+                <strong style={{ color: 'var(--jg-gold)' }}> {zodiac.gemTh}</strong>
+                {' '}({zodiac.gemEn}) เป็นเครื่องประดับเสริมพลัง
+              </p>
+            </div>
+            <div className="jg-gem-row">
+              <span className="jg-gem-chip">
+                <span
+                  className="jg-gem-chip-dot"
+                  style={{ background: zodiac.gemHex, color: zodiac.gemHex }}
+                ></span>
+                {zodiac.gemTh}
+              </span>
+            </div>
+            <CtaConsult label={`ปรึกษาแจนสั่งทำพลอยราศี${zodiac.th}`} />
+          </section>
+        )}
+
+        {/* Section: พลอยนพเก้า */}
         <section className="jg-section">
-          <div className="jg-section-label">ข้อมูลของคุณ</div>
+          <div className="jg-section-label">พลอยนพเก้า</div>
+          <h2 className="jg-section-title">9 พลอยศักดิ์สิทธิ์</h2>
           <div className="jg-section-body">
+            <p>
+              พลอยนพเก้าตามความเชื่ออินเดีย-ไทย เป็นพลอย 9 ชนิด
+              ที่ผูกพันกับ <strong>9 ดาวประจำในจักรวาล</strong>
+              นิยมทำเป็นแหวนหรือจี้ครบเซตเพื่อพลังคุ้มครองรอบด้าน
+            </p>
+          </div>
+          <NavaratnaGrid highlightHex={day?.hex} />
+          <CtaConsult label="ปรึกษาแจนสั่งทำพลอยนพเก้าครบเซต" />
+        </section>
+
+        {/* Section: พลอยเสริมตามด้านที่เลือก */}
+        {desire && (
+          <section className="jg-section">
+            <div className="jg-section-label">พลอยเสริม{desire.th.split(' ')[0]}</div>
+            <h2 className="jg-section-title">{desire.gem}</h2>
+            <div className="jg-section-body">
+              <p>
+                คุณเลือกอยากเสริม <strong>{desire.th}</strong>
+                {' '}— ความเชื่อทั่วไปนิยมใช้พลอย
+                <strong style={{ color: 'var(--jg-gold)' }}> {desire.gem}</strong>
+              </p>
+              <p className="jg-quote-th">&ldquo;{desire.meaning}&rdquo;</p>
+            </div>
+            <CtaConsult label={`ปรึกษาแจนสั่งทำพลอย${desire.gem}`} />
+          </section>
+        )}
+
+        {/* Section: บัญชี */}
+        <section className="jg-section">
+          <div className="jg-section-label">บัญชีของคุณ</div>
+          <h2 className="jg-section-title">ข้อมูลส่วนตัว</h2>
+          <div className="jg-account-list">
+            <div className="jg-account-item">
+              <span className="jg-account-label">ชื่อเล่น</span>
+              <span className="jg-account-value">คุณ{session.name}</span>
+            </div>
+            <div className="jg-account-item">
+              <span className="jg-account-label">เบอร์โทร</span>
+              <span className="jg-account-value">{phoneFmt}</span>
+            </div>
             {profile.birthday && (
-              <p>
-                <strong>วันเกิด</strong> · {displayThaiDate(profile.birthday)}
-              </p>
+              <div className="jg-account-item">
+                <span className="jg-account-label">วันเกิด</span>
+                <span className="jg-account-value">{displayThaiDate(profile.birthday)}</span>
+              </div>
             )}
-            {day && (
-              <p>
-                <strong>วัน{day.th}</strong> · ภรณ์ {day.porn} · สี{day.color}
-              </p>
-            )}
-            {zodiac && (
-              <p>
-                <strong>ราศี{zodiac.th}</strong> {zodiac.symbol} · พลอย {zodiac.gemTh}
-              </p>
+            {animal && (
+              <div className="jg-account-item">
+                <span className="jg-account-label">บุคลิก</span>
+                <span className="jg-account-value">{animal.th}</span>
+              </div>
             )}
           </div>
+          <p className="jg-account-note">
+            แก้ไขข้อมูล: ติดต่อแจนผ่าน LINE (ระบบแก้ไขในตัวเองกำลังพัฒนา)
+          </p>
         </section>
-
-        <section className="jg-section">
-          <div className="jg-section-label">เร็วๆ นี้</div>
-          <div className="jg-section-body">
-            <p>
-              Dashboard กำลังเตรียมเนื้อหาเต็มรูปแบบ:
-            </p>
-            <p>
-              ✦ พลอยประจำวันเกิดแบบเต็ม<br />
-              ✦ พลอยประจำราศีและคุณสมบัติ<br />
-              ✦ พลอยนพเก้า 9 ชนิด<br />
-              ✦ พลอยเสริม 9 ด้านชีวิต<br />
-              ✦ ปุ่มปรึกษา Jan สั่งทำพลอย
-            </p>
-          </div>
-        </section>
-
-        <p className="jg-placeholder-note">— Dashboard scaffolding · Round 3 จะเติมเนื้อหาเต็ม —</p>
       </div>
 
       <SiteFooter />

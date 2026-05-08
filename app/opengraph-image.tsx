@@ -1,14 +1,19 @@
+import { readFile } from 'fs/promises';
+import path from 'path';
 import { ImageResponse } from 'next/og';
 
 // Routed automatically by Next.js to /opengraph-image at runtime.
-// Uses Satori under the hood; only English text + simple layout
-// since Thai requires bundling a Thai font.
+// Loads Trirong (Thai+Latin) so Thai text renders correctly in Satori.
 
-export const alt = 'JanGems — Mystic gems from Chanthaburi';
+export const alt = 'JanGems — พลอยมงคลของคุณ';
 export const size = { width: 1200, height: 630 };
 export const contentType = 'image/png';
 
 export default async function OGImage() {
+  const trirongData = await readFile(
+    path.join(process.cwd(), 'app/fonts/Trirong-Medium.ttf'),
+  );
+
   return new ImageResponse(
     (
       <div
@@ -23,9 +28,10 @@ export default async function OGImage() {
           justifyContent: 'center',
           color: '#F2EAD6',
           padding: 80,
+          fontFamily: 'Trirong',
+          position: 'relative',
         }}
       >
-        {/* radial mist accents */}
         <div
           style={{
             position: 'absolute',
@@ -53,26 +59,25 @@ export default async function OGImage() {
           }}
         />
 
-        {/* gold horizontal accent line */}
         <div
           style={{
             display: 'flex',
             width: 200,
             height: 1,
-            background: 'linear-gradient(90deg, transparent, #D4A24C, transparent)',
-            marginBottom: 40,
+            background:
+              'linear-gradient(90deg, transparent, #D4A24C, transparent)',
+            marginBottom: 36,
           }}
         />
-
 
         <div
           style={{
             display: 'flex',
-            fontSize: 200,
+            fontSize: 180,
             fontStyle: 'italic',
             color: '#D4A24C',
             lineHeight: 1,
-            marginBottom: 28,
+            marginBottom: 24,
           }}
         >
           JanGems
@@ -81,8 +86,19 @@ export default async function OGImage() {
         <div
           style={{
             display: 'flex',
-            fontSize: 42,
+            fontSize: 60,
             color: '#F2EAD6',
+            marginBottom: 18,
+          }}
+        >
+          พลอยมงคลของคุณ
+        </div>
+
+        <div
+          style={{
+            display: 'flex',
+            fontSize: 30,
+            color: '#A89B7E',
             marginBottom: 50,
           }}
         >
@@ -93,7 +109,7 @@ export default async function OGImage() {
           style={{
             display: 'flex',
             fontSize: 22,
-            color: '#A89B7E',
+            color: '#D4A24C',
             letterSpacing: 8,
             textTransform: 'uppercase',
           }}
@@ -102,6 +118,16 @@ export default async function OGImage() {
         </div>
       </div>
     ),
-    { ...size },
+    {
+      ...size,
+      fonts: [
+        {
+          name: 'Trirong',
+          data: trirongData,
+          style: 'normal',
+          weight: 500,
+        },
+      ],
+    },
   );
 }

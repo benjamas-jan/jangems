@@ -580,8 +580,27 @@ export default function QuizApp() {
   const [modalOpen, setModalOpen] = useState(false);
   const [hydrated, setHydrated] = useState(false);
 
-  // hydrate from localStorage on first client render only
+  // hydrate from URL search params (shared link) or localStorage
   useEffect(() => {
+    const url = new URL(window.location.href);
+    const d = url.searchParams.get('d');
+    const a = url.searchParams.get('a');
+    const w = url.searchParams.get('w');
+    const validDay = d && days.some((x) => x.id === d);
+    const validAnimal = a && animals.some((x) => x.id === a);
+    const validDesire = w && desires.some((x) => x.id === w);
+
+    if (validDay && validAnimal && validDesire) {
+      setAnswers({
+        day: d as DayId,
+        animal: a as AnimalId,
+        desire: w as DesireId,
+      });
+      setStep('result');
+      setHydrated(true);
+      return;
+    }
+
     try {
       const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') as Answers;
       setAnswers(saved);
@@ -598,6 +617,26 @@ export default function QuizApp() {
     if (!hydrated) return;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(answers));
   }, [answers, hydrated]);
+
+  // sync URL with answers when on result step (shareable link with personalised OG)
+  useEffect(() => {
+    if (!hydrated) return;
+    if (step === 'result' && answers.day && answers.animal && answers.desire) {
+      const params = new URLSearchParams({
+        d: answers.day,
+        a: answers.animal,
+        w: answers.desire,
+      });
+      const target = `/quiz?${params.toString()}`;
+      if (window.location.pathname + window.location.search !== target) {
+        window.history.replaceState({}, '', target);
+      }
+    } else if (step === 'welcome') {
+      if (window.location.search) {
+        window.history.replaceState({}, '', '/quiz');
+      }
+    }
+  }, [step, answers, hydrated]);
 
   const goQ1 = () => setStep('q1');
   const pickDay = (id: DayId) => {

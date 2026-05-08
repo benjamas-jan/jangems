@@ -270,7 +270,7 @@ function Result({
 }: {
   answers: Required<Answers>;
   onSignup: () => void;
-  onShare: (kind: 'fb' | 'line' | 'ig') => void;
+  onShare: (kind: 'fb' | 'line') => void;
   onRestart: () => void;
 }) {
   const day = days.find((d) => d.id === answers.day)!;
@@ -351,7 +351,7 @@ function Result({
 
       <div className="jg-result-section">
         <div className="jg-rs-label">แชร์ผลของคุณ</div>
-        <div className="jg-share-row">
+        <div className="jg-share-row jg-share-row-2">
           <button className="jg-share-btn" onClick={() => onShare('fb')}>
             <span className="jg-share-icon">
               <Icon.FB />
@@ -363,12 +363,6 @@ function Result({
               <Icon.LINE />
             </span>
             LINE
-          </button>
-          <button className="jg-share-btn" onClick={() => onShare('ig')}>
-            <span className="jg-share-icon">
-              <Icon.Download />
-            </span>
-            IG Story
           </button>
         </div>
       </div>
@@ -665,40 +659,15 @@ export default function QuizApp() {
     setStep('welcome');
   };
 
-  const onShare = async (kind: 'fb' | 'line' | 'ig') => {
+  const onShare = (kind: 'fb' | 'line') => {
     const url = window.location.href;
     if (kind === 'line') {
       window.open(
         `https://line.me/R/msg/text/?${encodeURIComponent('ผลทำนายพลอยมงคลของฉัน ' + url)}`,
         '_blank',
       );
-      return;
-    }
-    if (kind === 'fb') {
+    } else {
       window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-      return;
-    }
-    // IG Story — generate and download a 1080x1920 image
-    if (!answers.day || !answers.desire) return;
-    try {
-      const params = new URLSearchParams({
-        day: answers.day,
-        desire: answers.desire,
-      });
-      const res = await fetch(`/api/share-image?${params.toString()}`);
-      if (!res.ok) throw new Error(`status ${res.status}`);
-      const blob = await res.blob();
-      const objectUrl = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = objectUrl;
-      a.download = `jangems-${answers.day}.png`;
-      document.body.appendChild(a);
-      a.click();
-      a.remove();
-      URL.revokeObjectURL(objectUrl);
-    } catch (err) {
-      console.error('IG share failed', err);
-      alert('สร้างรูปไม่สำเร็จ ลองใหม่อีกครั้ง');
     }
   };
 

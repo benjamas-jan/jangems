@@ -81,10 +81,10 @@ export const navaratna: NavaratnaGem[] = [
     cut: 'cushion',
   },
   {
-    id: 'catseye', th: 'เพทาย', en: 'Cat\'s Eye',
+    id: 'catseye', th: 'ไพฑูรย์', en: 'Cat\'s Eye',
     planet: 'เกตุ', hex: '#A89B7E',
     domain: 'ความเชื่อใจ · ปาฏิหาริย์',
-    reading: 'พลอยของพระเกตุ เสริมศรัทธา ความรู้สึกแม่นยำ และโอกาสที่ไม่คาดคิด',
+    reading: 'พลอยของพระเกตุ ไพฑูรย์ (Cat\'s Eye Chrysoberyl) มีลายแสงพิเศษ เสริมศรัทธา ความรู้สึกแม่นยำ และโอกาสที่ไม่คาดคิด',
     advice: 'นิยมใส่เป็นแหวนนิ้วกลางหรือแหวนนิ้วก้อย — ดีสำหรับนักลงทุน',
     cut: 'oval',
   },

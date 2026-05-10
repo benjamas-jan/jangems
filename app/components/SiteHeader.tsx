@@ -9,6 +9,7 @@ import { logout } from '../actions/auth';
 const PUBLIC_NAV = [
   { href: '/', label: 'หน้าแรก' },
   { href: '/quiz', label: 'ทำนายพลอย' },
+  { href: '/gems', label: 'รู้จักพลอย' },
   { href: '/about', label: 'เกี่ยวกับเรา' },
   { href: '/products', label: 'สินค้า' },
   { href: '/contact', label: 'ติดต่อ' },

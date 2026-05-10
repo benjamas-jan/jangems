@@ -1138,6 +1138,205 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.6;
 }
 
+/* ── /gems article ── */
+.jg-toc {
+  margin: 0 0 28px;
+  padding: 18px 20px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+}
+.jg-toc-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.3em;
+  color: var(--jg-gold);
+  text-transform: uppercase;
+  margin-bottom: 12px;
+}
+.jg-toc-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jg-toc-list a {
+  font-family: var(--font-display-th);
+  font-size: 16px;
+  color: var(--jg-ink);
+  text-decoration: none;
+  display: block;
+  transition: color 0.2s ease;
+}
+.jg-toc-list a:hover { color: var(--jg-gold); }
+
+.jg-color-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-top: 20px;
+}
+.jg-color-group {
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+  padding: 18px;
+}
+.jg-color-group-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+.jg-color-swatch {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  border: 1px solid rgba(255,255,255,0.15);
+  flex-shrink: 0;
+}
+.jg-color-group-th {
+  font-family: var(--font-display-th);
+  font-size: 18px;
+  color: var(--jg-ink);
+}
+.jg-color-group-en {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.25em;
+  color: var(--jg-gold-dim);
+  text-transform: uppercase;
+}
+
+.jg-color-gem-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.jg-color-gem {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 4px;
+  border-bottom: 1px solid rgba(212, 162, 76, 0.08);
+  flex-wrap: wrap;
+}
+.jg-color-gem:last-child { border-bottom: none; }
+.jg-color-gem-dot {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.jg-color-gem-th {
+  font-family: var(--font-display-th);
+  font-size: 15px;
+  color: var(--jg-ink);
+}
+.jg-color-gem-en {
+  font-size: 12px;
+  color: var(--jg-ink-dim);
+  font-family: var(--font-mono);
+  letter-spacing: 0.05em;
+}
+.jg-color-gem-mohs {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: var(--jg-gold-dim);
+  text-transform: uppercase;
+}
+
+/* Hardness tier cards */
+.jg-tier-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: 20px;
+}
+.jg-tier-card {
+  padding: 18px;
+  background: rgba(242, 234, 214, 0.025);
+  border: 1px solid var(--jg-line);
+  border-radius: 14px;
+}
+.jg-tier-card.jg-tier-hard   { border-color: rgba(212, 162, 76, 0.4); }
+.jg-tier-card.jg-tier-medium { border-color: rgba(212, 162, 76, 0.18); }
+.jg-tier-card.jg-tier-soft   { border-color: rgba(184, 134, 156, 0.3); }
+.jg-tier-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.jg-tier-th {
+  font-family: var(--font-display-th);
+  font-size: 20px;
+  color: var(--jg-gold);
+}
+.jg-tier-range {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  color: var(--jg-ink-dim);
+  text-transform: uppercase;
+}
+.jg-tier-advice {
+  font-size: 14px;
+  color: var(--jg-ink);
+  line-height: 1.7;
+  margin-bottom: 12px;
+}
+.jg-tier-gem-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.jg-tier-gem-list li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  background: rgba(212, 162, 76, 0.06);
+  border: 1px solid var(--jg-line);
+  border-radius: 999px;
+  font-family: var(--font-display-th);
+  font-size: 13px;
+}
+
+/* Tier pill (used in section 3 cross-reference) */
+.jg-tier-pill {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+.jg-tier-pill-hard {
+  color: var(--jg-gold);
+  background: rgba(212, 162, 76, 0.12);
+  border: 1px solid rgba(212, 162, 76, 0.4);
+}
+.jg-tier-pill-medium {
+  color: var(--jg-ink-dim);
+  background: rgba(242, 234, 214, 0.04);
+  border: 1px solid var(--jg-line);
+}
+.jg-tier-pill-soft {
+  color: var(--jg-rose);
+  background: rgba(184, 134, 156, 0.1);
+  border: 1px solid rgba(184, 134, 156, 0.3);
+}
+
 /* Preview banner (above sections) */
 .jg-preview-banner {
   margin: 0 0 16px;

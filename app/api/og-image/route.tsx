@@ -177,11 +177,24 @@ export async function GET(req: NextRequest) {
           <div
             style={{
               display: 'flex',
-              marginTop: 8,
+              alignItems: 'center',
+              gap: 12,
+              marginTop: 14,
               fontSize: 24,
               color: '#A89B7E',
             }}
           >
+            <div
+              style={{
+                display: 'flex',
+                width: 32,
+                height: 32,
+                borderRadius: 9999,
+                background: `radial-gradient(circle at 32% 32%, ${lightenHex(desire.hex, 80)}, ${desire.hex} 50%, ${darkenHex(desire.hex, 60)})`,
+                border: `1px solid ${darkenHex(desire.hex, 60)}`,
+                boxShadow: `0 0 16px ${desire.hex}66`,
+              }}
+            />
             พลอยเสริม{desire.th.split(' ')[0]} · {desire.gem}
           </div>
           <div

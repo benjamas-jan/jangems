@@ -172,7 +172,12 @@ export default async function DashboardPage() {
         {desire && (
           <section className="jg-section">
             <div className="jg-section-label">พลอยเสริม{desire.th.split(' ')[0]}</div>
-            <h2 className="jg-section-title">{desire.gem}</h2>
+            <h2 className="jg-section-title jg-section-title-with-gem">
+              <span className="jg-section-title-gem">
+                <Gem color={desire.hex} cut={desire.cut} size={56} />
+              </span>
+              {desire.gem}
+            </h2>
             <div className="jg-section-body">
               <p>
                 คุณเลือกอยากเสริม <strong>{desire.th}</strong>

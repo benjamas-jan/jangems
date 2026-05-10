@@ -31,6 +31,8 @@ export type Desire = {
   id: DesireId;
   th: string;
   gem: string;
+  hex: string;
+  cut: 'cushion' | 'oval' | 'marquise' | 'round';
   meaning: string;
   advice: string;
 };
@@ -104,21 +106,25 @@ export const animals: Animal[] = [
 export const desires: Desire[] = [
   {
     id: 'work', th: 'การงาน ความสำเร็จ', gem: 'ทับทิม',
+    hex: '#C8364B', cut: 'cushion',
     meaning: 'ความสำเร็จ ลาภยศ อายุยืน',
     advice: 'ทับทิมเป็นพลอยของอาทิตย์ ส่งเสริมภาวะผู้นำและการได้รับการยอมรับในที่ทำงาน นิยมใส่เป็นแหวน',
   },
   {
     id: 'love', th: 'ความรัก เสน่ห์', gem: 'บุษราคัม',
+    hex: '#E8C547', cut: 'cushion',
     meaning: 'มีเสน่ห์เป็นที่รัก',
     advice: 'บุษราคัมเสริมความนุ่มนวลและมนุษยสัมพันธ์ที่อบอุ่น เหมาะใส่ใกล้หัวใจ เช่น จี้หรือต่างหู',
   },
   {
     id: 'wealth', th: 'โชคลาภ ทรัพย์', gem: 'ไพลิน',
+    hex: '#6B9DC4', cut: 'oval',
     meaning: 'ความร่ำรวย ความรัก ความเมตตา',
     advice: 'ไพลินเป็นพลอยของศุกร์/เสาร์ ตามตำราเสริมโชคและทรัพย์สินสะสม นิยมใส่เป็นแหวนหรือจี้',
   },
   {
     id: 'protect', th: 'ปกป้อง คุ้มครอง', gem: 'มรกต',
+    hex: '#5BA381', cut: 'marquise',
     meaning: 'ป้องกันภัยอันตราย ความศรัทธา',
     advice: 'มรกตช่วยป้องกันสิ่งร้ายและพลังลบ นิยมใส่เป็นแหวนนิ้วก้อยหรือสร้อยข้อมือ',
   },

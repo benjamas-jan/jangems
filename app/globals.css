@@ -579,6 +579,21 @@ a { color: inherit; text-decoration: none; }
   line-height: 1.35;
 }
 .jg-rs-title-with-icon { margin-top: 10px; }
+
+/* Section title with inline gem (e.g. desire section on dashboard) */
+.jg-section-title-with-gem {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-top: 6px;
+}
+.jg-section-title-gem {
+  width: 56px;
+  height: 56px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+}
 .jg-rs-desc {
   color: var(--jg-ink-dim);
   font-size: 14px;

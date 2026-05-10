@@ -1559,6 +1559,13 @@ a { color: inherit; text-decoration: none; }
   display: grid;
   place-items: center;
   color: var(--jg-gold);
+  overflow: hidden;
+}
+.jg-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
 }
 .jg-product-body {
   padding: 14px;

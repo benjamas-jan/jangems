@@ -9,17 +9,25 @@ export const metadata: Metadata = {
   description: 'ตัวอย่างเครื่องประดับพลอยสั่งทำจาก JanGems',
 };
 
-type Sample = { type: string; name: string; price: string; tier: 'hero' | 'standard'; tag?: string };
+type Sample = {
+  id: string;
+  type: string;
+  name: string;
+  note: string;
+  image?: string;
+  tag?: string;
+};
 
-// Order weighted by sales-ease for made-to-order spiritual jewelry:
-// rings + pendants get hero treatment; bracelet is standard;
-// earrings shown last (custom on request).
+// All 6 photos are rings — kept in /public/products/ with their original
+// filenames so this list maps 1:1 to the uploaded files. Add more entries
+// (or change the type/category) when more photos arrive.
 const SAMPLES: Sample[] = [
-  { type: 'Pendant',  name: 'จี้พลอยเล็ก เริ่มต้น',  price: 'เริ่มต้น 3,800 บาท', tier: 'hero',     tag: 'ยอดนิยม · ใส่ทุกวัน' },
-  { type: 'Ring',     name: 'แหวนพลอยเม็ดเดี่ยว',   price: 'เริ่มต้น 8,500 บาท', tier: 'hero',     tag: 'ขายดีอันดับ 1' },
-  { type: 'Pendant',  name: 'จี้พลอยล้อมเพชร',      price: 'เริ่มต้น 12,000 บาท', tier: 'standard' },
-  { type: 'Bracelet', name: 'กำไลพลอยลวดทอง',       price: 'เริ่มต้น 9,800 บาท', tier: 'standard' },
-  { type: 'Custom',   name: 'งานออกแบบเฉพาะ',        price: 'ปรึกษาราคา',           tier: 'standard', tag: 'ต่างหู / เซตเครื่องประดับ' },
+  { id: '132628', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132628.jpg', tag: 'งานช่างจันทบุรี' },
+  { id: '132819', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132819.jpg' },
+  { id: '133257', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133257.jpg' },
+  { id: '133659', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133659.jpg' },
+  { id: '134717', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-134717.jpg' },
+  { id: '135107', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-135107.jpg' },
 ];
 
 function GemThumb() {
@@ -60,29 +68,34 @@ export default async function ProductsPage() {
 
         <section className="jg-section">
           <div className="jg-section-label">ตัวอย่างผลงาน</div>
-          <h2 className="jg-section-title">งานสั่งทำยอดนิยม</h2>
+          <h2 className="jg-section-title">แหวนพลอยงานสั่งทำ</h2>
           <div className="jg-section-body">
             <p>
-              <strong>จี้และแหวนพลอย</strong> เป็นที่นิยมที่สุด —
-              ใส่ทุกวันได้ ใกล้ตัว เหมาะกับการเสริมพลังตามความเชื่อ
+              ทุกวงเป็น<strong>งานช่างทำมือ</strong> คัดสรรพลอยและออกแบบเฉพาะ
+              ตามความต้องการของลูกค้า
             </p>
             <p>
-              ราคาขึ้นกับชนิดของพลอย ความซับซ้อนของดีไซน์ และโลหะที่เลือก
-              เริ่มต้น 3,800 บาท สำหรับจี้พลอยเล็ก
+              ราคาขึ้นกับชนิดของพลอย ขนาด และความซับซ้อนของดีไซน์
+              สอบถามรายละเอียดและราคาผ่าน LINE
             </p>
           </div>
 
           <div className="jg-product-grid">
             {SAMPLES.map((p) => (
-              <div key={p.name} className={`jg-product-card ${p.tier === 'hero' ? 'jg-product-card-hero' : ''}`}>
+              <div key={p.id} className="jg-product-card">
                 <div className="jg-product-thumb">
-                  <GemThumb />
+                  {p.image ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img src={p.image} alt={p.name} className="jg-product-img" />
+                  ) : (
+                    <GemThumb />
+                  )}
                 </div>
                 <div className="jg-product-body">
                   <span className="jg-product-eyebrow">{p.type}</span>
                   <span className="jg-product-name">{p.name}</span>
                   {p.tag && <span className="jg-product-tag">{p.tag}</span>}
-                  <span className="jg-product-price">{p.price}</span>
+                  <span className="jg-product-price">{p.note}</span>
                 </div>
               </div>
             ))}

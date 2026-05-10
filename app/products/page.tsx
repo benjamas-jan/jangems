@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { readdirSync } from 'fs';
+import path from 'path';
 import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { getSession } from '../lib/auth';
@@ -9,47 +11,55 @@ export const metadata: Metadata = {
   description: 'ตัวอย่างเครื่องประดับพลอยสั่งทำจาก JanGems',
 };
 
-type Sample = {
+type Product = {
   id: string;
   type: string;
   name: string;
   note: string;
-  image?: string;
+  image: string;
   tag?: string;
 };
 
-// All 6 photos are rings — kept in /public/products/ with their original
-// filenames so this list maps 1:1 to the uploaded files. Add more entries
-// (or change the type/category) when more photos arrive.
-const SAMPLES: Sample[] = [
-  { id: '132628', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132628.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '132819', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132819.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '133257', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133257.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '133659', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133659.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '134717', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-134717.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '135107', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-135107.jpg', tag: 'งานช่างจันทบุรี' },
-];
+// Detect a category from filename prefix so different jewelry kinds
+// can be uploaded to the same folder.
+function categoryFromFilename(name: string): { type: string; name: string } {
+  const lower = name.toLowerCase();
+  if (lower.startsWith('pendant')) return { type: 'Pendant', name: 'จี้พลอย · งานสั่งทำ' };
+  if (lower.startsWith('bracelet')) return { type: 'Bracelet', name: 'กำไลพลอย · งานสั่งทำ' };
+  if (lower.startsWith('earring')) return { type: 'Earring', name: 'ต่างหูพลอย · งานสั่งทำ' };
+  if (lower.startsWith('necklace')) return { type: 'Necklace', name: 'สร้อยพลอย · งานสั่งทำ' };
+  return { type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ' };
+}
 
-function GemThumb() {
-  return (
-    <svg width="80" height="80" viewBox="0 0 80 80" fill="none">
-      <defs>
-        <radialGradient id="thumb-grad" cx="35%" cy="35%">
-          <stop offset="0%" stopColor="#E9BD63" />
-          <stop offset="60%" stopColor="#D4A24C" />
-          <stop offset="100%" stopColor="#8B6B2E" />
-        </radialGradient>
-      </defs>
-      <path d="M40 8 L60 30 L52 64 L28 64 L20 30 Z" fill="url(#thumb-grad)" stroke="#8B6B2E" strokeWidth="0.6" />
-      <path d="M40 8 L52 30 L40 36 L28 30 Z" fill="#F2EAD6" opacity="0.4" />
-      <path d="M28 30 L52 30 L52 64 L28 64 Z" fill="#D4A24C" opacity="0.25" />
-      <ellipse cx="36" cy="22" rx="4" ry="2" fill="white" opacity="0.5" />
-    </svg>
-  );
+// Read /public/products at request time. Newest first by filename (descending),
+// which works naturally if filenames embed a timestamp (HHMMSS or YYYYMMDD).
+function loadProducts(): Product[] {
+  try {
+    const dir = path.join(process.cwd(), 'public', 'products');
+    const files = readdirSync(dir)
+      .filter((f) => /\.(jpe?g|png|webp)$/i.test(f))
+      .sort()
+      .reverse();
+    return files.map((f) => {
+      const cat = categoryFromFilename(f);
+      return {
+        id: f.replace(/\.[^.]+$/, ''),
+        type: cat.type,
+        name: cat.name,
+        note: 'ปรึกษาราคา',
+        image: `/products/${f}`,
+        tag: 'งานช่างจันทบุรี',
+      };
+    });
+  } catch {
+    return [];
+  }
 }
 
 export default async function ProductsPage() {
   const session = await getSession();
+  const products = loadProducts();
+
   return (
     <>
       <SiteHeader session={session} />
@@ -68,10 +78,10 @@ export default async function ProductsPage() {
 
         <section className="jg-section">
           <div className="jg-section-label">ตัวอย่างผลงาน</div>
-          <h2 className="jg-section-title">แหวนพลอยงานสั่งทำ</h2>
+          <h2 className="jg-section-title">เครื่องประดับงานสั่งทำ</h2>
           <div className="jg-section-body">
             <p>
-              ทุกวงเป็น<strong>งานช่างทำมือ</strong> คัดสรรพลอยและออกแบบเฉพาะ
+              ทุกชิ้นเป็น<strong>งานช่างทำมือ</strong> คัดสรรพลอยและออกแบบเฉพาะ
               ตามความต้องการของลูกค้า
             </p>
             <p>
@@ -80,26 +90,24 @@ export default async function ProductsPage() {
             </p>
           </div>
 
-          <div className="jg-product-grid">
-            {SAMPLES.map((p) => (
-              <div key={p.id} className="jg-product-card">
-                <div className="jg-product-thumb">
-                  {p.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
+          {products.length > 0 && (
+            <div className="jg-product-grid">
+              {products.map((p) => (
+                <div key={p.id} className="jg-product-card">
+                  <div className="jg-product-thumb">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={p.image} alt={p.name} className="jg-product-img" />
-                  ) : (
-                    <GemThumb />
-                  )}
+                  </div>
+                  <div className="jg-product-body">
+                    <span className="jg-product-eyebrow">{p.type}</span>
+                    <span className="jg-product-name">{p.name}</span>
+                    {p.tag && <span className="jg-product-tag">{p.tag}</span>}
+                    <span className="jg-product-price">{p.note}</span>
+                  </div>
                 </div>
-                <div className="jg-product-body">
-                  <span className="jg-product-eyebrow">{p.type}</span>
-                  <span className="jg-product-name">{p.name}</span>
-                  {p.tag && <span className="jg-product-tag">{p.tag}</span>}
-                  <span className="jg-product-price">{p.note}</span>
-                </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </section>
 
         <section className="jg-section">
@@ -120,8 +128,6 @@ export default async function ProductsPage() {
             </Link>
           </div>
         </section>
-
-        <p className="jg-placeholder-note">— ราคาและรูป placeholder · พร้อมให้แก้ไข —</p>
       </div>
 
       <SiteFooter />

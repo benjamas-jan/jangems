@@ -390,7 +390,7 @@ function Result({
       <div className="jg-result-section">
         <div className="jg-rs-label">แชร์ผลของคุณ</div>
         <div className="jg-share-row jg-share-row-1">
-          <button className="jg-share-btn" onClick={onShare}>
+          <button className="jg-share-btn jg-share-btn-line" onClick={onShare}>
             <span className="jg-share-icon">
               <Icon.LINE />
             </span>

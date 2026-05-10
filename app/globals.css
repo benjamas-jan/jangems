@@ -689,6 +689,26 @@ a { color: inherit; text-decoration: none; }
 }
 .jg-share-btn.jg-share-btn-line .jg-share-icon { color: #fff; }
 
+/* Restart button — secondary; sits beneath the LINE share button.
+   Same shape as share buttons but ghost/outline so the share CTA stays
+   visually dominant. */
+.jg-share-btn.jg-share-btn-restart {
+  background: rgba(242, 234, 214, 0.04);
+  border-color: var(--jg-line);
+  color: var(--jg-ink-dim);
+  font-weight: 400;
+}
+.jg-share-btn.jg-share-btn-restart:hover {
+  background: rgba(212, 162, 76, 0.08);
+  border-color: var(--jg-line-strong);
+  color: var(--jg-ink);
+}
+.jg-share-btn.jg-share-btn-restart .jg-share-icon {
+  color: var(--jg-gold-dim);
+  font-family: var(--font-mono);
+  font-size: 18px;
+}
+
 /* CTA card */
 .jg-cta-card {
   margin: 32px 0;

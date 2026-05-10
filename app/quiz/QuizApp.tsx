@@ -14,7 +14,7 @@ import {
 import { useRouter } from 'next/navigation';
 import { Icon, animalIcons, desireIcons } from './icons';
 import { Gem } from './Gem';
-import { Brand } from '../components/Brand';
+import { SiteHeader } from '../components/SiteHeader';
 import { SiteFooter } from '../components/SiteFooter';
 import { ThaiDatePicker } from '../components/ThaiDatePicker';
 import { PinInput } from '../components/PinInput';
@@ -388,16 +388,14 @@ function Result({
             </span>
             แชร์บอกเพื่อนใน LINE
           </button>
+          <button className="jg-share-btn jg-share-btn-restart" onClick={onRestart}>
+            <span className="jg-share-icon">↺</span>
+            เริ่มทดสอบใหม่
+          </button>
         </div>
       </div>
 
       {loggedIn ? <DashboardLinkCard /> : <SignupCard onClick={onSignup} />}
-
-      <div style={{ textAlign: 'center', marginTop: 24 }}>
-        <button className="jg-back" onClick={onRestart}>
-          ↺ ทำใหม่อีกครั้ง
-        </button>
-      </div>
 
       <SiteFooter />
     </div>
@@ -704,18 +702,7 @@ export default function QuizApp({ session }: { session?: SessionInfo }) {
 
   return (
     <div data-screen-label={`JanGems ${step}`}>
-      <div className="jg-topbar">
-        <Brand asLink />
-        {step !== 'welcome' && step !== 'loading' && (
-          <button
-            className="jg-back"
-            onClick={restart}
-            style={{ fontSize: 11, letterSpacing: '.15em', textTransform: 'uppercase' }}
-          >
-            ↺ ทำใหม่
-          </button>
-        )}
-      </div>
+      <SiteHeader session={session ?? null} />
 
       {stepIndex >= 0 && <Progress step={stepIndex} />}
 

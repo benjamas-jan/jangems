@@ -647,23 +647,6 @@ a { color: inherit; text-decoration: none; }
   font-family: var(--font-display-th);
   font-size: 16px;
 }
-
-/* LINE-branded share button (high-contrast green to stand out vs the
-   mystic-gold theme — this CTA is the primary growth lever). */
-.jg-share-btn-line {
-  background: #06C755;
-  border-color: #06C755;
-  color: #fff;
-  font-weight: 500;
-  box-shadow: 0 0 0 0 rgba(6, 199, 85, 0);
-  transition: all 0.2s ease;
-}
-.jg-share-btn-line:hover {
-  background: #05A847;
-  border-color: #05A847;
-  box-shadow: 0 0 24px 0 rgba(6, 199, 85, 0.35);
-}
-.jg-share-btn-line .jg-share-icon { color: #fff; }
 .jg-share-btn {
   display: flex;
   flex-direction: column;
@@ -688,6 +671,23 @@ a { color: inherit; text-decoration: none; }
   display: grid; place-items: center;
   color: var(--jg-gold);
 }
+
+/* LINE-branded share button (high-contrast green to stand out vs the
+   mystic-gold theme — this CTA is the primary growth lever).
+   Compound selector + placed after base rules to win specificity + order. */
+.jg-share-btn.jg-share-btn-line {
+  background: #06C755;
+  border-color: #06C755;
+  color: #fff;
+  font-weight: 500;
+  box-shadow: 0 0 0 0 rgba(6, 199, 85, 0);
+}
+.jg-share-btn.jg-share-btn-line:hover {
+  background: #05A847;
+  border-color: #05A847;
+  box-shadow: 0 0 24px 0 rgba(6, 199, 85, 0.35);
+}
+.jg-share-btn.jg-share-btn-line .jg-share-icon { color: #fff; }
 
 /* CTA card */
 .jg-cta-card {

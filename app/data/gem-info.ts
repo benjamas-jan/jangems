@@ -35,6 +35,7 @@ export const COLOR_ORDER: ColorKey[] = [
 export const gemLibrary: GemInfo[] = [
   // Red
   { th: 'ทับทิม',           en: 'Ruby',                hex: '#C8364B', mohs: 9,    mohsLabel: '9',     color: 'red',    family: 'Corundum' },
+  { th: 'เพทาย (สีแดง)',    en: 'Red Zircon (Hyacinth)', hex: '#C8533C', mohs: 7.25, mohsLabel: '6.5–7.5', color: 'red', family: 'Zircon' },
   { th: 'โกเมนสีแดง',       en: 'Red Garnet',          hex: '#7A2E3A', mohs: 7,    mohsLabel: '6.5–7.5', color: 'red',  family: 'Garnet' },
   { th: 'ปะการังสีแดง',     en: 'Red Coral',           hex: '#C44536', mohs: 3.5,  mohsLabel: '3–4',   color: 'red',    family: 'Organic' },
 

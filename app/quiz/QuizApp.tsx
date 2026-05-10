@@ -270,7 +270,7 @@ function Result({
 }: {
   answers: Required<Answers>;
   onSignup: () => void;
-  onShare: (kind: 'fb' | 'line') => void;
+  onShare: () => void;
   onRestart: () => void;
 }) {
   const day = days.find((d) => d.id === answers.day)!;
@@ -351,18 +351,12 @@ function Result({
 
       <div className="jg-result-section">
         <div className="jg-rs-label">แชร์ผลของคุณ</div>
-        <div className="jg-share-row jg-share-row-2">
-          <button className="jg-share-btn" onClick={() => onShare('fb')}>
-            <span className="jg-share-icon">
-              <Icon.FB />
-            </span>
-            Facebook
-          </button>
-          <button className="jg-share-btn" onClick={() => onShare('line')}>
+        <div className="jg-share-row jg-share-row-1">
+          <button className="jg-share-btn" onClick={onShare}>
             <span className="jg-share-icon">
               <Icon.LINE />
             </span>
-            LINE
+            แชร์บอกเพื่อนใน LINE
           </button>
         </div>
       </div>
@@ -659,16 +653,18 @@ export default function QuizApp() {
     setStep('welcome');
   };
 
-  const onShare = (kind: 'fb' | 'line') => {
-    const url = window.location.href;
-    if (kind === 'line') {
-      window.open(
-        `https://line.me/R/msg/text/?${encodeURIComponent('ผลทำนายพลอยมงคลของฉัน ' + url)}`,
-        '_blank',
-      );
-    } else {
-      window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
-    }
+  const onShare = () => {
+    if (!answers.day || !answers.animal || !answers.desire) return;
+    const params = new URLSearchParams({
+      d: answers.day,
+      a: answers.animal,
+      w: answers.desire,
+    });
+    const shareUrl = `${window.location.origin}/quiz?${params.toString()}`;
+    window.open(
+      `https://line.me/R/msg/text/?${encodeURIComponent('ผลทำนายพลอยมงคลของฉัน ' + shareUrl)}`,
+      '_blank',
+    );
   };
 
   const stepIndex = step === 'q1' ? 0 : step === 'q2' ? 1 : step === 'q3' ? 2 : -1;

@@ -23,11 +23,11 @@ type Sample = {
 // (or change the type/category) when more photos arrive.
 const SAMPLES: Sample[] = [
   { id: '132628', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132628.jpg', tag: 'งานช่างจันทบุรี' },
-  { id: '132819', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132819.jpg' },
-  { id: '133257', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133257.jpg' },
-  { id: '133659', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133659.jpg' },
-  { id: '134717', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-134717.jpg' },
-  { id: '135107', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-135107.jpg' },
+  { id: '132819', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-132819.jpg', tag: 'งานช่างจันทบุรี' },
+  { id: '133257', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133257.jpg', tag: 'งานช่างจันทบุรี' },
+  { id: '133659', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-133659.jpg', tag: 'งานช่างจันทบุรี' },
+  { id: '134717', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-134717.jpg', tag: 'งานช่างจันทบุรี' },
+  { id: '135107', type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ', note: 'ปรึกษาราคา', image: '/products/ring-handmade-135107.jpg', tag: 'งานช่างจันทบุรี' },
 ];
 
 function GemThumb() {

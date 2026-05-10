@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { days, desires } from './data';
+import { getSession } from '../lib/auth';
 import QuizApp from './QuizApp';
 
 const TITLE = 'Quiz · JanGems';
@@ -54,6 +55,7 @@ export async function generateMetadata({
   };
 }
 
-export default function QuizPage() {
-  return <QuizApp />;
+export default async function QuizPage() {
+  const session = await getSession();
+  return <QuizApp session={session} />;
 }

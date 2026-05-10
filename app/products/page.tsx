@@ -25,9 +25,10 @@ type Product = {
 function categoryFromFilename(name: string): { type: string; name: string } {
   const lower = name.toLowerCase();
   if (lower.startsWith('pendant')) return { type: 'Pendant', name: 'จี้พลอย · งานสั่งทำ' };
-  if (lower.startsWith('bracelet')) return { type: 'Bracelet', name: 'กำไลพลอย · งานสั่งทำ' };
+  if (lower.startsWith('bangle')) return { type: 'Bangle', name: 'กำไลพลอย · งานสั่งทำ' };
+  if (lower.startsWith('bracelet')) return { type: 'Bracelet', name: 'สร้อยข้อมือพลอย · งานสั่งทำ' };
   if (lower.startsWith('earring')) return { type: 'Earring', name: 'ต่างหูพลอย · งานสั่งทำ' };
-  if (lower.startsWith('necklace')) return { type: 'Necklace', name: 'สร้อยพลอย · งานสั่งทำ' };
+  if (lower.startsWith('necklace')) return { type: 'Necklace', name: 'สร้อยคอพลอย · งานสั่งทำ' };
   return { type: 'Ring', name: 'แหวนพลอย · งานสั่งทำ' };
 }
 

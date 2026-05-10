@@ -262,16 +262,54 @@ function SignupCard({ onClick }: { onClick: () => void }) {
   );
 }
 
+function DashboardLinkCard() {
+  return (
+    <div className="jg-cta-card">
+      <div className="jg-cta-eyebrow">✦ Welcome back ✦</div>
+      <h3 className="jg-cta-title">
+        ดูพลอยมงคลครบ
+        <br />
+        ใน Dashboard ของคุณ
+      </h3>
+      <div className="jg-cta-list">
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check">
+            <Icon.Check />
+          </span>
+          <span>พลอยประจำวันเกิด · ราศี</span>
+        </div>
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check">
+            <Icon.Check />
+          </span>
+          <span>พลอยนพเก้า 9 ด้านชีวิต</span>
+        </div>
+        <div className="jg-cta-list-item">
+          <span className="jg-cta-check">
+            <Icon.Check />
+          </span>
+          <span>ปรึกษาแจนสั่งทำเครื่องประดับ</span>
+        </div>
+      </div>
+      <Link href="/dashboard" className="jg-btn jg-btn-primary" style={{ width: '100%' }}>
+        <Icon.Sparkle /> ไป Dashboard
+      </Link>
+    </div>
+  );
+}
+
 function Result({
   answers,
   onSignup,
   onShare,
   onRestart,
+  loggedIn,
 }: {
   answers: Required<Answers>;
   onSignup: () => void;
   onShare: () => void;
   onRestart: () => void;
+  loggedIn: boolean;
 }) {
   const day = days.find((d) => d.id === answers.day)!;
   const animal = animals.find((a) => a.id === answers.animal)!;
@@ -361,7 +399,7 @@ function Result({
         </div>
       </div>
 
-      <SignupCard onClick={onSignup} />
+      {loggedIn ? <DashboardLinkCard /> : <SignupCard onClick={onSignup} />}
 
       <div style={{ textAlign: 'center', marginTop: 24 }}>
         <button className="jg-back" onClick={onRestart}>
@@ -562,7 +600,10 @@ function Modal({ answers, onClose }: { answers: Required<Answers>; onClose: () =
 
 const STORAGE_KEY = 'jg-answers';
 
-export default function QuizApp() {
+type SessionInfo = { phone: string; name: string } | null;
+
+export default function QuizApp({ session }: { session?: SessionInfo }) {
+  const loggedIn = !!session;
   const [step, setStep] = useState<Step>('welcome');
   const [answers, setAnswers] = useState<Answers>({});
   const [modalOpen, setModalOpen] = useState(false);
@@ -697,6 +738,7 @@ export default function QuizApp() {
           onSignup={() => setModalOpen(true)}
           onShare={onShare}
           onRestart={restart}
+          loggedIn={loggedIn}
         />
       )}
 

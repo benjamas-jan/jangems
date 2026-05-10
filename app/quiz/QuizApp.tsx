@@ -220,42 +220,34 @@ function Loader() {
 function SignupCard({ onClick }: { onClick: () => void }) {
   return (
     <div className="jg-cta-card">
-      <div className="jg-cta-eyebrow">✦ Unlock the full reading ✦</div>
+      <div className="jg-cta-eyebrow">✦ ข้อมูลโหราศาสตร์ครบทุกมิติ ✦</div>
       <h3 className="jg-cta-title">
-        อยากรู้พลอยที่ใช่
+        ปลดล็อคข้อมูลโหราศาสตร์เพิ่มเติม
         <br />
-        สำหรับคุณจริงๆ?
+        เพียงสมัครสมาชิก
       </h3>
       <div className="jg-cta-list">
         <div className="jg-cta-list-item">
           <span className="jg-cta-check">
             <Icon.Check />
           </span>
-          <span>
-            พลอยประจำตัวคุณแบบเต็ม
-            <br />
-            <small>ตามตำราโหราศาสตร์ไทย</small>
-          </span>
+          <span>พลอยประจำวันเกิด + ราศี อย่างละเอียด</span>
         </div>
         <div className="jg-cta-list-item">
           <span className="jg-cta-check">
             <Icon.Check />
           </span>
-          <span>
-            พลอยเสริม 9 ด้าน
-            <br />
-            <small>การงาน · ความรัก · โชคลาภ · ปกป้อง · เสน่ห์ · สุขภาพ · บารมี · สติปัญญา · คุ้มครอง</small>
-          </span>
+          <span>พลอยนพเก้า · 9 ด้านชีวิต</span>
         </div>
         <div className="jg-cta-list-item">
           <span className="jg-cta-check">
             <Icon.Check />
           </span>
-          <span>คำแนะนำส่วนตัวจากแจน</span>
+          <span>คำแนะนำการสั่งทำจากแจน</span>
         </div>
       </div>
       <button className="jg-btn jg-btn-primary" onClick={onClick} style={{ width: '100%' }}>
-        <Icon.Sparkle /> สร้าง Profile (ใช้แค่เบอร์โทร)
+        <Icon.Sparkle /> สมัครฟรี · ดูดวงเต็ม
       </button>
       <div className="jg-cta-fineprint">30 วินาที · ฟรีตลอดชีพ</div>
     </div>
